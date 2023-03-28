@@ -1,26 +1,16 @@
-// Connect to DB
-const { Client } = require('pg');
+const DB_NAME = "autonomous-collective";
 
-// change the DB_NAME string to whatever your group decides on
-const DB_NAME = 'univ-boilerplate';
+const { Client } = require("pg"); // imports the pg module
 
-const DB_URL =
+const connectionString =
   process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
-
-let client;
-
-// github actions client config
-if (process.env.CI) {
-  client = new Client({
-    host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    password: 'postgres',
-    database: 'postgres',
-  });
-} else {
-  // local / heroku client config
-  client = new Client(DB_URL);
-}
+// supply the db name and location of the database
+const client = new Client({
+  connectionString,
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : undefined,
+});
 
 module.exports = client;

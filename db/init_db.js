@@ -1,8 +1,4 @@
-const {
-  client,
-  // declare your model imports here
-  // for example, User
-} = require('./');
+const client = require("./client");
 
 async function buildTables() {
   try {
@@ -18,6 +14,7 @@ async function buildTables() {
 
 async function populateInitialData() {
   try {
+    console.log("!!!!", "Hello World");
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
