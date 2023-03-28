@@ -1,5 +1,28 @@
 const client = require("./client");
 
+// const usersToAdd = [{
+//   username:
+//   email:
+
+// }
+// {
+//   username:
+//   email:
+
+// }
+// {
+//   username:
+//   email:
+
+// }]
+
+// const productsToAdd = [{
+
+// }
+// {
+
+// }]
+
 async function buildTables() {
   try {
     client.connect();
@@ -15,6 +38,7 @@ async function buildTables() {
 async function populateInitialData() {
   try {
     console.log("!!!!", "Hello World");
+
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
