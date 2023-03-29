@@ -2,11 +2,6 @@ const client = require("./client");
 
 
 
-const { createUser, deleteUser, updateUser, createTags, getAllTags, getTagById } = require("./index");
-const { productsToAdd, usersToAdd, reviewsToAdd, tagsToAdd } = require("./dummyData");
-
-
-
 const {
   //user exports
   createUser,
@@ -21,6 +16,10 @@ const {
   editProduct,
   getAllProducts,
   getProductByTitle,
+  //tag exports
+  createTags, 
+  getAllTags,
+  getTagById
 } = require("./index");
 const {
   productsToAdd,
@@ -153,6 +152,7 @@ const createInitialTags = async () => {
     throw(error)
   }
 } 
+
 
 const createInitialProducts = async () => {
   console.log("Starting to create products");

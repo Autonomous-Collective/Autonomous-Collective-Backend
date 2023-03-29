@@ -1,6 +1,6 @@
 module.exports = {
     ...require('./users'),
-    ...require('./tags')
+    ...require('./tags'),
 
     ...require('./products'),
 };

@@ -20,12 +20,11 @@ const createTags = async({name}) => {
 //get all tags:
 const getAllTags = async() => {
     try{
-       const { rows: [tags] } = await client.query(`
+       const { rows } = await client.query(`
         SELECT * 
         FROM tags;
        `);
-
-        return tags;
+        return rows;
     }catch(error){
         throw(error);
     }
