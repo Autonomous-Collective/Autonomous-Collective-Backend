@@ -13,10 +13,71 @@ const createProduct = async({title, author, isbn, description, price, imageUrl, 
         console.log(product, "product from createProduct");
         return product;
     }catch(error){
-        throw error
+        throw error;
     }
 };
 
+const editProduct = async(id, fields = {}) =>{
+    const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 1}`)
+    .join(", ");
+
+    if (setString.length === 0) {
+        return;
+      }
+    
+    try{
+        const{
+            rows: [product],
+        } = await client.query(`
+            UPDATE products
+            SET ${setString}
+            WHERE id=${id}
+            RETURNING *;
+        `, Object.values(fields));
+
+        console.log(product, "updated product");
+        return product;
+    } catch(error){
+        console.error("issue updating product");
+        throw error;
+    }
+};
+
+const getAllProducts = async() => {
+    try{
+        const { rows } = await client.query(`
+            SELECT *
+            FROM products;
+        `);
+        console.log(rows, "all products from getAllProducts");
+        return rows;
+    } catch(error){
+        console.error("error getting all products");
+        throw error;
+    }
+};
+
+const getProductByTitle = async(title) => {
+    try{
+        const{
+            rows: [product],
+        } = await client.query(`
+            SELECT *
+            FROM products
+            WHERE title = $1;
+        `, [title]);
+        console.log(product, "product from getProductByTitle");
+        return product;
+    }catch(error){
+        console.error("error getting product by title");
+        throw error;
+    }
+}
+
 module.exports = {
     createProduct: createProduct,
+    editProduct: editProduct,
+    getAllProducts: getAllProducts,
+    getProductByTitle: getProductByTitle,
 }
