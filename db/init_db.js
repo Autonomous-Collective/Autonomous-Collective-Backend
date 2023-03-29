@@ -1,10 +1,20 @@
 const client = require("./client");
 
-
-const { createUser, deleteUser, updateUser } = require("./index");
-const { productsToAdd, usersToAdd, reviewsToAdd, tagsToAdd } = require("./dummyData");
-
-
+const {
+  createUser,
+  deleteUser,
+  updateUser,
+  getUser,
+  getUserByEmail,
+  getUserById,
+  getAllUsers,
+} = require("./index");
+const {
+  productsToAdd,
+  usersToAdd,
+  reviewsToAdd,
+  tagsToAdd,
+} = require("./dummyData");
 
 const dropTables = async () => {
   try {
@@ -123,6 +133,12 @@ async function rebuildDB() {
     await createInitialUsers();
     // await deleteUser(4);
     await updateUser(4, { email: "test@test.com" });
+    await getUser({
+      email: "Nicolerules@mymail.com",
+      password: "ojwasterrible",
+    });
+    await getUserById(4);
+    await getAllUsers();
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
