@@ -1,5 +1,7 @@
 const client = require("./client");
 
+const { createUser, deleteUser } = require("./index");
+
 const usersToAdd = [
   {
     name: "Stephen",
@@ -219,13 +221,16 @@ const createTables = async () => {
   }
 };
 
-const populateInitialData = async () => {
-  try {
-    console.log("!!!!", "Hello World");
 
-    // create useful starting data by leveraging your
-    // Model.method() adapters to seed your db, for example:
-    // const user1 = await User.createUser({ ...user info goes here... })
+// create initial data functions
+
+const createInitialUsers = async () => {
+  console.log("Starting to Create Users");
+  try {
+    const users = await Promise.all(usersToAdd.map(createUser));
+    console.log(users);
+    console.log("finished creating users");
+    return users;
   } catch (error) {
     throw error;
   }
@@ -235,6 +240,8 @@ async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
+    await createInitialUsers();
+    // await deleteUser(4);
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
