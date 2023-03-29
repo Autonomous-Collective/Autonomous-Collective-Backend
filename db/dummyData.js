@@ -1,3 +1,4 @@
+//users to add
 const usersToAdd = [
   {
     name: "Stephen",
@@ -29,6 +30,29 @@ const usersToAdd = [
   },
 ];
 
+//user addresses
+const userAddresses = [
+  {
+    address: "7492 Wentworth Street",
+    city: "Oklahoma City",
+    state: "OK",
+    userId: 1,
+  },
+  {
+    address: "507 Clinton Street",
+    city: "Jacksonville",
+    state: "FL",
+    userId: 3,
+  },
+  {
+    address: "9316 Center Rd.",
+    city: "Houston",
+    state: "TX",
+    userId: 4,
+  },
+];
+
+//products to add
 const productsToAdd = [
   {
     title: "To Kill A Mocking Bird",
@@ -39,7 +63,7 @@ const productsToAdd = [
     price: 1499,
     imageUrl:
       "https://fastly.picsum.photos/id/646/200/300.jpg?hmac=qCJ0bf6G6oSxx8YMMc1ZLVryK-w596XjRD3o8cXQLFc",
-    quantity: 3,
+    quantity: 30,
   },
   {
     title: "Liquid Rules",
@@ -50,7 +74,7 @@ const productsToAdd = [
     price: 1599,
     imageUrl:
       "https://fastly.picsum.photos/id/432/200/300.jpg?hmac=S0muAtaN6T0PXbBlf5O-UL0chTPM6i9FReOIs0IJlDU",
-    quantity: 5,
+    quantity: 21,
   },
   {
     title: "Out",
@@ -61,7 +85,7 @@ const productsToAdd = [
     price: 1800,
     imageUrl:
       "https://fastly.picsum.photos/id/670/200/300.jpg?hmac=Ib58hZuwIQfcFZjEvKKi0p-j4GN1BGIkE7wLsa95Xk4",
-    quantity: 2,
+    quantity: 30,
   },
   {
     title: "Six of Crows",
@@ -72,7 +96,7 @@ const productsToAdd = [
     price: 1899,
     imageUrl:
       "https://fastly.picsum.photos/id/212/200/300.jpg?hmac=2PUnX8vk476_x3NwjUExdYhPxVyP1Qd17BLvvBYTONQ",
-    quantity: 1,
+    quantity: 20,
   },
   {
     title: "Death On The Nile",
@@ -83,7 +107,7 @@ const productsToAdd = [
     price: 1399,
     imageUrl:
       "https://fastly.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg",
-    quantity: 8,
+    quantity: 30,
   },
   {
     title: "The Immortal Life of Henrietta Lacks",
@@ -94,7 +118,7 @@ const productsToAdd = [
     price: 1600,
     imageUrl:
       "https://fastly.picsum.photos/id/194/200/300.jpg?hmac=jZgjsqqVvdWnXHdytjS2JPImgQFz9bGSyVQ31-b_eH4",
-    quantity: 10,
+    quantity: 27,
   },
   {
     title: "Anne of Green Gables",
@@ -105,7 +129,7 @@ const productsToAdd = [
     price: 1700,
     imageUrl:
       "https://fastly.picsum.photos/id/439/200/300.jpg?hmac=-995cverChuR_nKZFItxOP38htc5deVMd6ZrKiME55g",
-    quantity: 4,
+    quantity: 20,
   },
   {
     title: "The Book Thief",
@@ -116,7 +140,7 @@ const productsToAdd = [
     price: 1299,
     imageUrl:
       "https://fastly.picsum.photos/id/130/200/300.jpg?hmac=ax-dkx2e5CJww9f5IfH-mUHr_9eNBKUNGHcA46-0oB0",
-    quantity: 12,
+    quantity: 15,
   },
   {
     title: "The Complete Sherlock Holmes",
@@ -126,7 +150,7 @@ const productsToAdd = [
     price: 300,
     imageUrl:
       "https://fastly.picsum.photos/id/1072/200/300.jpg?hmac=uzq3N0ox40X06q0Ql4mCdgMwHc13gIa0QAuu_6Zp6lQ",
-    quantity: 4,
+    quantity: 25,
   },
   {
     title: "Pride & Prejudice",
@@ -136,10 +160,11 @@ const productsToAdd = [
     price: 799,
     imageUrl:
       "https://fastly.picsum.photos/id/1080/200/300.jpg?hmac=3jCG4X8ni9cpiEppj6KVvqhpJ_owIFtDQOABJmhG1I0",
-    quantity: 6,
+    quantity: 20,
   },
 ];
 
+//tags to add
 const tagsToAdd = [
   {
     name: "Fiction",
@@ -173,6 +198,7 @@ const tagsToAdd = [
   },
 ];
 
+//reviews to add
 const reviewsToAdd = [
   {
     score: 2,
@@ -205,11 +231,74 @@ const reviewsToAdd = [
   },
 ];
 
+const productTagsToAdd = [
+  {
+    productId: 1,
+    tagId: [1, 8],
+  },
+  {
+    productId: 2,
+    tagId: [2, 10],
+  },
+  {
+    productId: 3,
+    tagID: [1, 5],
+  },
+  {
+    productId: 4,
+    tagId: [1, 3, 6],
+  },
+];
 
+const userCartsToAdd = [
+   {
+    cartOwnerId: 1,
+    isOrdered: false
+   },
+   {
+    cartOwnerId: 2, 
+    isOrdered: true
+   },
+   {
+    cartOwnerId: 3, 
+    isOrdered: false
+   },
+   {
+    cartOwnerId: 4,
+    isOrdered: true
+   }
+];
+
+const cartProductsToAdd = [
+    {
+        productID: 1, 
+        cartId: 1, 
+        quantity: 1
+    },
+    {
+        productID: 2, 
+        cartId: 2,
+        quantity: 3
+    },
+    {
+        productID: 3, 
+        cartId: 3,
+        quantity: 2
+    },
+    {
+        productID: 4, 
+        cartId: 4, 
+        quantity: 1
+    }
+]
 
 module.exports = {
   usersToAdd,
+  userAddresses,
   productsToAdd,
+  productTagsToAdd,
+  userCartsToAdd,
+  cartProductsToAdd,
   reviewsToAdd,
   tagsToAdd,
 };
