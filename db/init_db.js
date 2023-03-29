@@ -125,15 +125,30 @@ const createInitialUsers = async () => {
     console.log("finished creating users");
     return users;
   } catch (error) {
+    console.error("error creating users")
     throw error;
   }
 };
+
+const createInitialProducts = async () => {
+  console.log("Starting to create products");
+  try{
+    const products = await Promise.all(productsToAdd.map(createProduct));
+    console.log(products);
+    console.log("finished creating products");
+    return products;
+  } catch (error) {
+    console.error("error creating products");
+    throw error;
+  }
+}
 
 async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
     await createInitialUsers();
+    await createInitialProducts();
     // await deleteUser(4);
     await updateUser(4, { email: "test@test.com" });
     await getUser({
