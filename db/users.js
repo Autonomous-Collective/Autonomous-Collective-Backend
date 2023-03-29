@@ -145,12 +145,17 @@ const getUser = async ({ email, password }) => {
 };
 
 const getAllUsers = async () => {
-  const { rows } = await client.query(`
-        SELECT id, email, "isAdmin", "isGuest"
-        FROM users
-    `);
-  console.log(rows, "all users from get Allusers");
-  return rows;
+    try{
+        const { rows } = await client.query(`
+              SELECT id, email, "isAdmin", "isGuest"
+              FROM users
+          `);
+        console.log(rows, "all users from get Allusers");
+        return rows;
+    } catch(error){
+        console.error("error getting all users");
+        throw error;
+    }
 };
 
 module.exports = {

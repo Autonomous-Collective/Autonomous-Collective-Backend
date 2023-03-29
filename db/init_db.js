@@ -10,7 +10,10 @@ const {
   getUserById,
   getAllUsers,
   //product exports
-  createProduct
+  createProduct,
+  editProduct,
+  getAllProducts,
+  getProductByTitle,
 } = require("./index");
 const {
   productsToAdd,
@@ -147,8 +150,10 @@ async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
+    //initial funcs
     await createInitialUsers();
     await createInitialProducts();
+    //user funcs
     // await deleteUser(4);
     await updateUser(4, { email: "test@test.com" });
     await getUser({
@@ -157,6 +162,10 @@ async function rebuildDB() {
     });
     await getUserById(4);
     await getAllUsers();
+    //product funcs
+    await editProduct(3, {title: "edited title"});
+    await getAllProducts();
+    await getProductByTitle("To Kill A Mocking Bird");
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
