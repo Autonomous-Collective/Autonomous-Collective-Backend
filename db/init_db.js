@@ -1,27 +1,127 @@
 const client = require("./client");
 
-// const usersToAdd = [{
-//   username:
-//   email:
+const usersToAdd = [
+  {
+    name: "Stephen",
+    email: "TheKing@mymail.com",
+    password: "2stephen2quit",
+    isAdmin: true,
+    isGuest: false,
+  },
+  {
+    name: "Nicole",
+    email: "Nicolerules@mymail.com",
+    password: "ojwasterrible",
+    isAdmin: false,
+    isGuest: false,
+  },
+  {
+    name: "Victor",
+    email: "youngandrestless@mymail.com",
+    password: "bold&beautiful",
+    isAdmin: false,
+    isGuest: false,
+  },
+  {
+    name: "Barbara",
+    email: "barbarian@mymail.com",
+    password: "sumeriarules!",
+    isAdmin: false,
+    isGuest: false,
+  },
+];
 
-// }
-// {
-//   username:
-//   email:
-
-// }
-// {
-//   username:
-//   email:
-
-// }]
-
-// const productsToAdd = [{
-
-// }
-// {
-
-// }]
+const productsToAdd = [
+  {
+    title: "To Kill A Mocking Bird",
+    author: "Harper Lee",
+    isbn: "9781234567897",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567898",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567899",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567901",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567902",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567903",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567904",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567905",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+  {
+    title: "",
+    author: "",
+    isbn: "9781234567906",
+    description: "",
+    price: "",
+    imageUrl: "",
+    quantity: "",
+  },
+];
 
 async function buildTables() {
   try {
