@@ -1,6 +1,7 @@
 const client = require("./client");
 
 const {
+  //user exports
   createUser,
   deleteUser,
   updateUser,
@@ -8,6 +9,8 @@ const {
   getUserByEmail,
   getUserById,
   getAllUsers,
+  //product exports
+  createProduct
 } = require("./index");
 const {
   productsToAdd,
