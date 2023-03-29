@@ -70,6 +70,7 @@ async function updateUser(id, fields = {}) {
       `,
       Object.values(fields)
     );
+    delete user.password;
     console.log(user, "Updated user");
     return user;
   } catch (error) {
@@ -77,8 +78,87 @@ async function updateUser(id, fields = {}) {
   }
 }
 
+const getUserByEmail = async (email) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+          SELECT * 
+          FROM users 
+          WHERE email = $1;
+          `,
+      [email]
+    );
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUserById = async (userId) => {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `SELECT id, email, "isAdmin", "isGuest"
+          FROM users
+          WHERE id = $1`,
+      [userId]
+    );
+    console.log(user, "user from Get user by id");
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const getUser = async ({ email, password }) => {
+  const userByEmail = await getUserByEmail(email);
+  const hashedPassword = userByEmail.password;
+  const isValid = await bcrypt.compare(password, hashedPassword);
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `SELECT id, email, password, "isAdmin", "isGuest" 
+     FROM users
+     WHERE id=${userByEmail.id}
+     
+     `
+    );
+    if (!isValid) {
+      console.log("Invalid email and/or password");
+      // throw {
+      //   name: "UserNotFoundError",
+      //   message: "Invalid username and password",
+      // };
+      return null;
+    } else {
+      delete user.password;
+      console.log(user, "Get user function return");
+      return user;
+    }
+  } catch (error) {
+    throw { error };
+  }
+};
+
+const getAllUsers = async () => {
+  const { rows } = await client.query(`
+        SELECT id, email, "isAdmin", "isGuest"
+        FROM users
+    `);
+  console.log(rows, "all users from get Allusers");
+  return rows;
+};
+
 module.exports = {
   createUser: createUser,
   deleteUser: deleteUser,
   updateUser: updateUser,
+  getUser: getUser,
+  getUserByEmail: getUserByEmail,
+  getUserById: getUserById,
+  getAllUsers: getAllUsers,
 };
