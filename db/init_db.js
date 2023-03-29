@@ -1,9 +1,33 @@
 const client = require("./client");
 
 
+
 const { createUser, deleteUser, updateUser, createTags, getAllTags, getTagById } = require("./index");
 const { productsToAdd, usersToAdd, reviewsToAdd, tagsToAdd } = require("./dummyData");
 
+
+
+const {
+  //user exports
+  createUser,
+  deleteUser,
+  updateUser,
+  getUser,
+  getUserByEmail,
+  getUserById,
+  getAllUsers,
+  //product exports
+  createProduct,
+  editProduct,
+  getAllProducts,
+  getProductByTitle,
+} = require("./index");
+const {
+  productsToAdd,
+  usersToAdd,
+  reviewsToAdd,
+  tagsToAdd,
+} = require("./dummyData");
 
 
 const dropTables = async () => {
@@ -112,9 +136,11 @@ const createInitialUsers = async () => {
     console.log("finished creating users");
     return users;
   } catch (error) {
+    console.error("error creating users")
     throw error;
   }
 };
+
 
 const createInitialTags = async () => {
   try{
@@ -128,14 +154,41 @@ const createInitialTags = async () => {
   }
 } 
 
+const createInitialProducts = async () => {
+  console.log("Starting to create products");
+  try{
+    const products = await Promise.all(productsToAdd.map(createProduct));
+    console.log(products);
+    console.log("finished creating products");
+    return products;
+  } catch (error) {
+    console.error("error creating products");
+    throw error;
+  }
+}
+
+
 async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
+    //initial funcs
     await createInitialUsers();
     await createInitialTags();
+    await createInitialProducts();
+    //user funcs
     // await deleteUser(4);
     await updateUser(4, { email: "test@test.com" });
+    await getUser({
+      email: "Nicolerules@mymail.com",
+      password: "ojwasterrible",
+    });
+    await getUserById(4);
+    await getAllUsers();
+    //product funcs
+    await editProduct(3, {title: "edited title"});
+    await getAllProducts();
+    await getProductByTitle("To Kill A Mocking Bird");
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
