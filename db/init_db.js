@@ -171,7 +171,7 @@ const createTables = async () => {
       description varchar(255) NOT NULL,
       price INTEGER NOT NULL,
       img varchar(255),
-      quanity INTEGER NOT NULL 
+      quantity INTEGER NOT NULL 
     );
     CREATE TABLE tags(
       id SERIAL PRIMARY KEY,
@@ -186,7 +186,7 @@ const createTables = async () => {
       id SERIAL PRIMARY KEY,
       "productId" INTEGER REFERENCES products(id),
       "cartId" INTEGER REFERENCES user_carts(id),
-      quanity INTEGER NOT NULL
+      quantity INTEGER NOT NULL
     );
     CREATE TABLE product_tags(
       id SERIAL PRIMARY KEY,
