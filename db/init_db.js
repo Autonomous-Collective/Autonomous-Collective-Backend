@@ -1,7 +1,9 @@
 const client = require("./client");
 
-const { createUser, deleteUser } = require("./index");
+
+const { createUser, deleteUser, updateUser } = require("./index");
 const { productsToAdd, usersToAdd, reviewsToAdd, tagsToAdd } = require("./dummyData");
+
 
 
 const dropTables = async () => {
@@ -100,7 +102,6 @@ const createTables = async () => {
   }
 };
 
-
 // create initial data functions
 
 const createInitialUsers = async () => {
@@ -121,6 +122,7 @@ async function rebuildDB() {
     await createTables();
     await createInitialUsers();
     // await deleteUser(4);
+    await updateUser(4, { email: "test@test.com" });
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
