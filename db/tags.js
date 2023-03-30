@@ -1,36 +1,40 @@
 const client = require("./client");
 
 //create tags!:
-const createTags = async({name}) => {
-    try{
-        const { rows : [tag] } = await client.query(
-            `
+const createTags = async ({ name }) => {
+  try {
+    const {
+      rows: [tag],
+    } = await client.query(
+      `
             INSERT INTO tags (name)
             VALUES ($1)
             ON CONFLICT (name) DO NOTHING
             RETURNING *;
-            ` , [name]
-        )
-        return tag;
-    }catch(error){
-        throw(error);
-    }
-}
+            `,
+      [name]
+    );
+    return tag;
+  } catch (error) {
+    throw error;
+  }
+};
 
 //get all tags:
-const getAllTags = async() => {
-    try{
-       const { rows } = await client.query(`
+const getAllTags = async () => {
+  try {
+    const { rows } = await client.query(`
         SELECT * 
         FROM tags;
        `);
-        return rows;
-    }catch(error){
-        throw(error);
-    }
-}
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
 
 //get tag by id:
+
 const getTagById = async(id) => {
     try{
 console.log("getting tag by id");
@@ -49,8 +53,9 @@ console.log("getting tag by id");
     }
 }
 
+
 module.exports = {
-    createTags: createTags,
-    getAllTags: getAllTags,  
-    getTagById: getTagById
-}
+  createTags: createTags,
+  getAllTags: getAllTags,
+  getTagById: getTagById,
+};
