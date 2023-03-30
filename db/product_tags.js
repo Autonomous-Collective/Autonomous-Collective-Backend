@@ -1,5 +1,6 @@
 const client = require("./client");
-const { getProductById, getTagById } = require("./");
+const { getProductById } = require("./products");
+const { getTagById } = require("./tags");
 
 async function createProductTag(productId, tagId) {
   try {
@@ -20,16 +21,17 @@ async function addTagsToProduct(productId, tagIdList) {
   try {
     const tagList = [];
     console.log(tagIdList, "!!! TAG ID LIST !!!");
-    tagIdList.map((tagId) => {
+    const tagIdPromises = await tagIdList.map((tagId) => {
+      console.log(tagId);
       const currentTag = getTagById(tagId);
       tagList.push(currentTag);
     });
 
-    await Promise.all(tagList);
+    await Promise.all(tagIdPromises);
     console.log(tagList);
 
     const createProductTagPromises = tagList.map((tag) =>
-      createProductTag(postId, tag.id)
+      createProductTag(productId, tag.id)
     );
 
     await Promise.all(createProductTagPromises);

@@ -101,7 +101,8 @@ const createTables = async () => {
     CREATE TABLE product_tags(
       id SERIAL PRIMARY KEY,
       "productId" INTEGER REFERENCES products(id),
-      "tagId" INTEGER REFERENCES tags(id)
+      "tagId" INTEGER REFERENCES tags(id),
+      UNIQUE("productId", "tagId")
     );
     CREATE TABLE user_addresses(
       id SERIAL PRIMARY KEY,
@@ -201,7 +202,6 @@ async function rebuildDB() {
     await Promise.all(addedProductTags);
 
     await getTagById(1);
-
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
