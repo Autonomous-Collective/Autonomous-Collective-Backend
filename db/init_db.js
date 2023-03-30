@@ -25,6 +25,7 @@ const {
 
   //reviews exports
   createReview,
+  editReview,
 
 
   //product_tags exports
@@ -222,6 +223,7 @@ async function rebuildDB() {
     await Promise.all(addedProductTags);
 
     await getTagById(1);
+    await editReview(1, {title: "WE EDITED THE TITLE"});
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
