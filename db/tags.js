@@ -31,17 +31,20 @@ const getAllTags = async() => {
 }
 
 //get tag by id:
-const getTagById = async({id}) => {
+const getTagById = async(id) => {
     try{
-
+console.log("getting tag by id");
         const {rows : [tag]} = await client.query(`
             SELECT *
             FROM tags
-            WHERE id === $1;
+            WHERE id = $1;
         `, [id]);
+        console.log(tag,"tagById");
+        console.log("finished getting tag by Id");
 
         return tag;
     }catch(error){
+        console.log("failed to get tag by id")
         throw(error);
     }
 }
