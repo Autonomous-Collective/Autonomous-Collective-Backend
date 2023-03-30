@@ -35,6 +35,7 @@ const {
   reviewsToAdd,
   tagsToAdd,
 } = require("./dummyData");
+const reviews = require("./reviews");
 
 
 const dropTables = async () => {
