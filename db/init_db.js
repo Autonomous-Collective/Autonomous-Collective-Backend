@@ -203,6 +203,7 @@ async function rebuildDB() {
     await createInitialTags();
     await createInitialProducts();
     await createInitialReviews();
+    await createReview({score: 7, title: "our test review", content: "this review is for testing", reviewerId: 1, productId: 2});
     //user funcs
     // await deleteUser(4);
     await getUser({
