@@ -1,7 +1,5 @@
 const client = require("./client");
 
-
-
 const {
   //user exports
   createUser,
@@ -20,19 +18,22 @@ const {
   getProductById,
   getProductsByAuthor,
 
-//tag exports
-  createTags, 
+  //tag exports
+  createTags,
   getAllTags,
-  getTagById
+  getTagById,
 
+  //product_tags exports
+  addTagsToProduct,
+  createProductTag,
 } = require("./index");
 const {
   productsToAdd,
   usersToAdd,
   reviewsToAdd,
   tagsToAdd,
+  productTagsToAdd,
 } = require("./dummyData");
-
 
 const dropTables = async () => {
   try {
@@ -145,19 +146,17 @@ const createInitialUsers = async () => {
   }
 };
 
-
 const createInitialTags = async () => {
-  try{
+  try {
     const tags = await Promise.all(tagsToAdd.map(createTags));
     console.log(tags);
     console.log("finished creating tags!");
     return tags;
-  }catch(error){
+  } catch (error) {
     console.log("error creating tags!");
-    throw(error)
+    throw error;
   }
-} 
-
+};
 
 const createInitialProducts = async () => {
   console.log("Starting to create products");
@@ -171,7 +170,6 @@ const createInitialProducts = async () => {
     throw error;
   }
 };
-
 
 async function rebuildDB() {
   try {
@@ -196,6 +194,10 @@ async function rebuildDB() {
     await getProductByTitle("To Kill A Mocking Bird");
     await getProductById(1);
     await getProductsByAuthor("Harper Lee");
+    const addedProductTags = productTagsToAdd.map((e) => {
+      addTagsToProduct(e.productId, e.tagId);
+    });
+    await Promise.all(addedProductTags);
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
