@@ -115,8 +115,8 @@ const createTables = async () => {
       address varchar(255) NOT NULL,
       city varchar(255) NOT NULL,
       state varchar(255) NOT NULL,
-      "productId" INTEGER REFERENCES users(id),
-      UNIQUE("productId", id) 
+      "userId" INTEGER REFERENCES users(id),
+      UNIQUE("userId", id) 
     );
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
