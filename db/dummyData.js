@@ -242,7 +242,7 @@ const productTagsToAdd = [
   },
   {
     productId: 3,
-    tagID: [1, 5],
+    tagId: [1, 5],
   },
   {
     productId: 4,
@@ -251,46 +251,46 @@ const productTagsToAdd = [
 ];
 
 const userCartsToAdd = [
-   {
+  {
     cartOwnerId: 1,
-    isOrdered: false
-   },
-   {
-    cartOwnerId: 2, 
-    isOrdered: true
-   },
-   {
-    cartOwnerId: 3, 
-    isOrdered: false
-   },
-   {
+    isOrdered: false,
+  },
+  {
+    cartOwnerId: 2,
+    isOrdered: true,
+  },
+  {
+    cartOwnerId: 3,
+    isOrdered: false,
+  },
+  {
     cartOwnerId: 4,
-    isOrdered: true
-   }
+    isOrdered: true,
+  },
 ];
 
 const cartProductsToAdd = [
-    {
-        productID: 1, 
-        cartId: 1, 
-        quantity: 1
-    },
-    {
-        productID: 2, 
-        cartId: 2,
-        quantity: 3
-    },
-    {
-        productID: 3, 
-        cartId: 3,
-        quantity: 2
-    },
-    {
-        productID: 4, 
-        cartId: 4, 
-        quantity: 1
-    }
-]
+  {
+    productID: 1,
+    cartId: 1,
+    quantity: 1,
+  },
+  {
+    productID: 2,
+    cartId: 2,
+    quantity: 3,
+  },
+  {
+    productID: 3,
+    cartId: 3,
+    quantity: 2,
+  },
+  {
+    productID: 4,
+    cartId: 4,
+    quantity: 1,
+  },
+];
 
 module.exports = {
   usersToAdd,
