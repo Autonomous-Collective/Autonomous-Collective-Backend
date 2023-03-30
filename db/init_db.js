@@ -23,7 +23,10 @@ const {
 //tag exports
   createTags, 
   getAllTags,
-  getTagById
+  getTagById,
+
+  //reviews exports
+  createReview,
 
 } = require("./index");
 const {
@@ -172,6 +175,19 @@ const createInitialProducts = async () => {
   }
 };
 
+const createInitialReviews = async () => {
+  console.log("Starting to create reviews");
+  try{
+    const reviews = await Promise.all(reviewsToAdd.map(createReview));
+    console.log(reviews);
+    console.log("finished creating reviews");
+    return reviews;
+  }catch(error){
+    console.log("error creating reviews");
+    throw(error);
+  }
+}
+
 
 async function rebuildDB() {
   try {
@@ -181,6 +197,7 @@ async function rebuildDB() {
     await createInitialUsers();
     await createInitialTags();
     await createInitialProducts();
+    await createInitialReviews();
     //user funcs
     // await deleteUser(4);
     await getUser({
