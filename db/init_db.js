@@ -142,7 +142,7 @@ const createInitialUsers = async () => {
 	console.log("Starting to Create Users");
 	try {
 		const users = await Promise.all(usersToAdd.map(createUser));
-		console.log(users);
+		// console.log(users);
 		console.log("finished creating users");
 		return users;
 	} catch (error) {
@@ -154,7 +154,7 @@ const createInitialUsers = async () => {
 const createInitialTags = async () => {
 	try {
 		const tags = await Promise.all(tagsToAdd.map(createTags));
-		console.log(tags);
+		// console.log(tags);
 		console.log("finished creating tags!");
 		return tags;
 	} catch (error) {
@@ -167,7 +167,7 @@ const createInitialProducts = async () => {
 	console.log("Starting to create products");
 	try {
 		const products = await Promise.all(productsToAdd.map(createProduct));
-		console.log(products);
+		// console.log(products);
 		console.log("finished creating products");
 		return products;
 	} catch (error) {
@@ -180,7 +180,7 @@ const createInitialReviews = async () => {
 	console.log("Starting to create reviews");
 	try {
 		const reviews = await Promise.all(reviewsToAdd.map(createReview));
-		console.log(reviews);
+		// console.log(reviews);
 		console.log("finished creating reviews");
 		return reviews;
 	} catch (error) {
@@ -197,6 +197,7 @@ async function rebuildDB() {
 		await createInitialUsers();
 		await createInitialTags();
 		await createInitialProducts();
+		
 		await createInitialReviews();
 		//user funcs
 		//await deleteUser(4);
@@ -209,18 +210,22 @@ async function rebuildDB() {
 		await getAllUsers();
 		// //product funcs
 		await editProduct(3, { title: "edited title" });
+
+		console.log(productTagsToAdd, 'productTagsToAdd')
+		const addedProductTags = productTagsToAdd.map((e) => {
+			console.log(e,' (((')
+			addTagsToProduct(e.productId, e.tagId);
+		});
+		await Promise.all(addedProductTags);
 		await getAllProducts();
 		await getProductByTitle("To Kill A Mocking Bird");
 
 		await getProductById(1);
 		await getProductsByAuthor("Harper Lee");
 
-		const addedProductTags = productTagsToAdd.map((e) => {
-			addTagsToProduct(e.productId, e.tagId);
-		});
-		await Promise.all(addedProductTags);
 
-		// await getTagById(1);
+		const tagNumber1 = await getTagById(1);
+		console.log(tagNumber1, 'I am tag number 1!!')
 	} catch (error) {
 		console.log("Error during rebuildDB");
 		throw error;

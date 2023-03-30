@@ -24,7 +24,7 @@ const createProduct = async ({
         `,
 			[title, author, isbn, description, price, imageUrl, quantity]
 		);
-		console.log(product, "product from createProduct");
+		// console.log(product, "product from createProduct");
 		return product;
 	} catch (error) {
 		throw error;
@@ -53,7 +53,7 @@ const editProduct = async (id, fields = {}) => {
 			Object.values(fields)
 		);
 
-		console.log(product, "updated product");
+		// console.log(product, "updated product");
 		return product;
 	} catch (error) {
 		console.error("issue updating product");
@@ -67,19 +67,21 @@ const getAllProducts = async () => {
             SELECT *
             FROM products;
         `);
-		console.log(rows, "all products from getAllProducts");
+		// console.log(rows, "all products from getAllProducts");
 
 		//map through rows
 		// get all tags associated with product
 		// add that tag list to that product
 
-		console.log(getTagsByProduct, "!!!GET TAGS BY PRODUCT FUNCTION!!!");
-		rows.map(async (product) => {
+		// console.log(getTagsByProduct, "!!!GET TAGS BY PRODUCT FUNCTION!!!");
+
+		// **** come back here
+		rows.forEach(async (product) => {
 			const tagIdList = await getTagsByProduct(product.id);
 			console.log(tagIdList, "LINE 79");
-			const tags = tagIdList.map((tagId) => {
-				console.log(tagId, "TAGID IN PRODUCTS");
-				const tagIDMAP = getTagById(tagId);
+			const tags = tagIdList.map((e) => {
+				console.log(e.tagId, "TAGID IN PRODUCTS");
+				const tagIDMAP = getTagById(e.tagId);
 				return tagIDMAP;
 			});
 			const thePromises = await Promise.all(tags);
@@ -106,7 +108,7 @@ const getProductByTitle = async (title) => {
         `,
 			[title]
 		);
-		console.log(product, "product from getProductByTitle");
+		// console.log(product, "product from getProductByTitle");
 		return product;
 	} catch (error) {
 		console.error("error getting product by title");
@@ -125,7 +127,7 @@ const getProductById = async (id) => {
         `,
 			[id]
 		);
-		console.log(product, "product from getProductById");
+		// console.log(product, "product from getProductById");
 		return product;
 	} catch (error) {
 		console.error("error getting product by Id");
@@ -142,7 +144,7 @@ const getProductsByAuthor = async (author) => {
         `,
 			[author]
 		);
-		console.log(rows, "product from getProductByauthor");
+		// console.log(rows, "product from getProductByauthor");
 		return rows;
 	} catch (error) {
 		console.error("error getting product by author");

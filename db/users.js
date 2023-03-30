@@ -39,7 +39,7 @@ const deleteUser = async (id) => {
         `,
       [id]
     );
-    console.log(user, "deleted user");
+    // console.log(user, "deleted user");
     console.log("finished deleting users");
     return user;
   } catch (error) {
@@ -71,7 +71,7 @@ async function updateUser(id, fields = {}) {
       Object.values(fields)
     );
     delete user.password;
-    console.log(user, "Updated user");
+    // console.log(user, "Updated user");
     return user;
   } catch (error) {
     throw error;
@@ -106,7 +106,7 @@ const getUserById = async (userId) => {
           WHERE id = $1`,
       [userId]
     );
-    console.log(user, "user from Get user by id");
+    // console.log(user, "user from Get user by id");
     return user;
   } catch (error) {
     throw error;
@@ -136,7 +136,7 @@ const getUser = async ({ email, password }) => {
       return null;
     } else {
       delete user.password;
-      console.log(user, "Get user function return");
+      // console.log(user, "Get user function return");
       return user;
     }
   } catch (error) {
@@ -150,7 +150,7 @@ const getAllUsers = async () => {
               SELECT id, email, "isAdmin", "isGuest"
               FROM users
           `);
-        console.log(rows, "all users from get Allusers");
+        // console.log(rows, "all users from get Allusers");
         return rows;
     } catch(error){
         console.error("error getting all users");
