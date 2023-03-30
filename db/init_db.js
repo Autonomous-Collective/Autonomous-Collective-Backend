@@ -217,10 +217,10 @@ async function rebuildDB() {
     await getProductById(1);
     await getProductsByAuthor("Harper Lee");
 
-    const addedProductTags = productTagsToAdd.map((e) => {
-      addTagsToProduct(e.productId, e.tagId);
-    });
-    await Promise.all(addedProductTags);
+    // const addedProductTags = productTagsToAdd.map((e) => {
+    //   addTagsToProduct(e.productId, e.tagId);
+    // });
+    // await Promise.all(addedProductTags);
 
     await getTagById(1);
     await editReview(1, {title: "WE EDITED THE TITLE"});
