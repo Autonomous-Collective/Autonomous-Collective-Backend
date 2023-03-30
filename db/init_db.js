@@ -14,6 +14,8 @@ const {
   editProduct,
   getAllProducts,
   getProductByTitle,
+  getProductById,
+  getProductsByAuthor,
 } = require("./index");
 const {
   productsToAdd,
@@ -128,14 +130,14 @@ const createInitialUsers = async () => {
     console.log("finished creating users");
     return users;
   } catch (error) {
-    console.error("error creating users")
+    console.error("error creating users");
     throw error;
   }
 };
 
 const createInitialProducts = async () => {
   console.log("Starting to create products");
-  try{
+  try {
     const products = await Promise.all(productsToAdd.map(createProduct));
     console.log(products);
     console.log("finished creating products");
@@ -144,7 +146,7 @@ const createInitialProducts = async () => {
     console.error("error creating products");
     throw error;
   }
-}
+};
 
 async function rebuildDB() {
   try {
@@ -155,17 +157,19 @@ async function rebuildDB() {
     await createInitialProducts();
     //user funcs
     // await deleteUser(4);
-    await updateUser(4, { email: "test@test.com" });
     await getUser({
       email: "Nicolerules@mymail.com",
       password: "ojwasterrible",
     });
+    await updateUser(4, { email: "test@test.com" });
     await getUserById(4);
     await getAllUsers();
     //product funcs
-    await editProduct(3, {title: "edited title"});
+    await editProduct(3, { title: "edited title" });
     await getAllProducts();
     await getProductByTitle("To Kill A Mocking Bird");
+    await getProductById(1);
+    await getProductsByAuthor("Harper Lee");
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
