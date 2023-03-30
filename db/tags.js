@@ -34,24 +34,25 @@ const getAllTags = async () => {
 };
 
 //get tag by id:
-const getTagById = async (id) => {
-  try {
-    const {
-      rows: [tag],
-    } = await client.query(
-      `
+
+const getTagById = async(id) => {
+    try{
+console.log("getting tag by id");
+        const {rows : [tag]} = await client.query(`
             SELECT *
             FROM tags
             WHERE id = $1;
-        `,
-      [id]
-    );
+        `, [id]);
+        console.log(tag,"tagById");
+        console.log("finished getting tag by Id");
 
-    return tag;
-  } catch (error) {
-    throw error;
-  }
-};
+        return tag;
+    }catch(error){
+        console.log("failed to get tag by id")
+        throw(error);
+    }
+}
+
 
 module.exports = {
   createTags: createTags,

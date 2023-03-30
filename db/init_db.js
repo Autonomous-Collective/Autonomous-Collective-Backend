@@ -194,10 +194,14 @@ async function rebuildDB() {
     await getProductByTitle("To Kill A Mocking Bird");
     await getProductById(1);
     await getProductsByAuthor("Harper Lee");
+
     const addedProductTags = productTagsToAdd.map((e) => {
       addTagsToProduct(e.productId, e.tagId);
     });
     await Promise.all(addedProductTags);
+
+    await getTagById(1);
+
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
