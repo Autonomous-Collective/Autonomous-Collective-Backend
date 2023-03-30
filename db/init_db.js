@@ -1,5 +1,7 @@
 const client = require("./client");
 
+
+
 const {
   //user exports
   createUser,
@@ -14,8 +16,15 @@ const {
   editProduct,
   getAllProducts,
   getProductByTitle,
+
   getProductById,
   getProductsByAuthor,
+
+//tag exports
+  createTags, 
+  getAllTags,
+  getTagById
+
 } = require("./index");
 const {
   productsToAdd,
@@ -23,6 +32,7 @@ const {
   reviewsToAdd,
   tagsToAdd,
 } = require("./dummyData");
+
 
 const dropTables = async () => {
   try {
@@ -135,6 +145,20 @@ const createInitialUsers = async () => {
   }
 };
 
+
+const createInitialTags = async () => {
+  try{
+    const tags = await Promise.all(tagsToAdd.map(createTags));
+    console.log(tags);
+    console.log("finished creating tags!");
+    return tags;
+  }catch(error){
+    console.log("error creating tags!");
+    throw(error)
+  }
+} 
+
+
 const createInitialProducts = async () => {
   console.log("Starting to create products");
   try {
@@ -148,12 +172,14 @@ const createInitialProducts = async () => {
   }
 };
 
+
 async function rebuildDB() {
   try {
     await dropTables();
     await createTables();
     //initial funcs
     await createInitialUsers();
+    await createInitialTags();
     await createInitialProducts();
     //user funcs
     // await deleteUser(4);
