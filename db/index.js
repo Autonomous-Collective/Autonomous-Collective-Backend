@@ -1,5 +1,5 @@
 module.exports = {
-    ...require('./reviews'),
+  ...require("./reviews"),
   ...require("./users"),
   ...require("./tags"),
   ...require("./product_tags"),

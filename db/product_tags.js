@@ -1,6 +1,5 @@
 const client = require("./client");
-const { getProductById } = require("./products");
-const { getTagById } = require("./tags");
+const { getProductById, getTagById } = require("./");
 
 async function createProductTag(productId, tagId) {
   try {
@@ -42,7 +41,24 @@ async function addTagsToProduct(productId, tagIdList) {
   }
 }
 
+const getTagsByProduct = async (productId) => {
+  try {
+    const { rows } = await client.query(
+      `
+          SELECT "tagId"
+          FROM product_tags
+          WHERE "productId" = $1
+          `,
+      [productId]
+    );
+
+    console.log(rows, "product_tags from get Tags by product");
+    return rows;
+  } catch (error) {}
+};
+
 module.exports = {
   addTagsToProduct,
   createProductTag,
+  getTagsByProduct,
 };

@@ -1,4 +1,5 @@
 const client = require("./client");
+const { getTagsByProduct, getTagById } = require("./");
 
 const createProduct = async ({
   title,
@@ -65,6 +66,20 @@ const getAllProducts = async () => {
             FROM products;
         `);
     console.log(rows, "all products from getAllProducts");
+
+    //map through rows
+    // get all tags associated with product
+    // add that tag list to that product
+
+    console.log(getTagsByProduct, "!!!GET TAGS BY PRODUCT FUNCTION!!!");
+    rows.map((product) => {
+      const tagIdList = getTagsByProduct(product.id);
+      const tags = tagIdList.map((tagId) => {
+        return getTagById(tagId);
+      });
+      product.tags = tags;
+    });
+
     return rows;
   } catch (error) {
     console.error("error getting all products");
