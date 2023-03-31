@@ -1,7 +1,7 @@
 const client = require("./client");
 
+//not tested yet
 const createUserAddress = async ({ name, address, city, state, userId }) => {
-  //not tested yet
   try {
     const {
       rows: [userAddress],
@@ -80,8 +80,6 @@ const getAddressByUser = async (id) => {
     SELECT *
     FROM user_addresses
     WHERE "userId" = $1
-
-
     `,
       [id]
     );

@@ -2,6 +2,7 @@ const client = require("./client");
 // const { getTagsByProduct, getTagById } = require("./");
 const { getTagsByProduct } = require("./product_tags");
 const { getTagById } = require("./tags");
+const { getReviewByProductId } = require("./reviews");
 
 const createProduct = async ({
   title,
@@ -156,6 +157,30 @@ const getProductsByAuthor = async (author) => {
   }
 };
 
+const deleteProduct = async (id) => {
+  try {
+    console.log("beginning to delete products");
+    // we don't want to hard delete a product because of the association to past orders. 
+    // delete could = isActive false to not display for sale 
+    //& remove from un-ordered carts on frontend? isActive check inside the carts.
+    const {
+      rows: [product],
+    } = await client.query(
+      `
+            DELETE FROM products
+            WHERE id = $1
+            RETURNING *;
+        `,
+      [id]
+    );
+    console.log("finished deleting product");
+    return product;
+  } catch (error) {
+    console.error("error deleting product");
+    throw error;
+  }
+};
+
 module.exports = {
   createProduct,
   editProduct,
@@ -163,4 +188,5 @@ module.exports = {
   getProductByTitle,
   getProductById,
   getProductsByAuthor,
+  deleteProduct,
 };
