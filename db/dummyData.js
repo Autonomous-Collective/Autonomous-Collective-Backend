@@ -1,5 +1,6 @@
 //users to add
 const usersToAdd = [
+  // add a user for all four of us as admins 
   {
     name: "Stephen",
     email: "TheKing@mymail.com",
@@ -260,7 +261,7 @@ const userCartsToAdd = [
   },
   {
     cartOwnerId: 2,
-    isOrdered: true,
+    isOrdered: false,
   },
   {
     cartOwnerId: 3,
@@ -268,28 +269,28 @@ const userCartsToAdd = [
   },
   {
     cartOwnerId: 4,
-    isOrdered: true,
+    isOrdered: false,
   },
 ];
 
 const cartProductsToAdd = [
   {
-    productID: 1,
+    productId: 1,
     cartId: 1,
     quantity: 1,
   },
   {
-    productID: 2,
+    productId: 2,
     cartId: 2,
     quantity: 3,
   },
   {
-    productID: 3,
+    productId: 3,
     cartId: 3,
     quantity: 2,
   },
   {
-    productID: 4,
+    productId: 4,
     cartId: 4,
     quantity: 1,
   },
