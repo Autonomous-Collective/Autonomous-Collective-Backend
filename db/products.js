@@ -80,20 +80,15 @@ const getAllProducts = async () => {
     // **** come back here
     const updatedProducts = rows.map(async (product) => {
       const tagIdList = await getTagsByProduct(product.id);
-      //   console.log(tagIdList, "LINE 79");
       const tags = tagIdList.map((e) => {
-        // console.log(e.tagId, "TAGID IN PRODUCTS");
-
         return e.name;
       });
       const thePromises = await Promise.all(tags);
-      //   console.log(thePromises, "from products.js");
       product.tags = thePromises;
-      //   console.log(product, "!!!!!!!");
       return product;
     });
     const awaitedProducts = await Promise.all(updatedProducts);
-    // console.log(awaitedProducts, "All products, should have tags attached");
+    console.log(awaitedProducts, "All products, should have tags attached");
     return awaitedProducts;
   } catch (error) {
     console.error("error getting all products");
@@ -157,23 +152,55 @@ const getProductsByAuthor = async (author) => {
   }
 };
 
+const getProductsByTagId = async (id) => {
+  try {
+    console.log("Starting to get Product by Tag", id);
+    const { rows } = await client.query(
+      `
+      SELECT products.* 
+      FROM products
+      JOIN product_tags ON product_tags."productId" = products.id
+      WHERE product_tags."tagId" = $1
+      `,
+      [id]
+    );
+
+    const updatedProducts = rows.map(async (product) => {
+      const tagIdList = await getTagsByProduct(product.id);
+      const tags = tagIdList.map((e) => {
+        return e.name;
+      });
+      const thePromises = await Promise.all(tags);
+      product.tags = thePromises;
+      return product;
+    });
+    const awaitedProducts = await Promise.all(updatedProducts);
+    console.log(awaitedProducts, "All products, should have tags attached");
+    return awaitedProducts;
+  } catch {
+    console.error("Error getting Product by Tag!");
+    throw error;
+  }
+};
+
 const deleteProduct = async (id) => {
   try {
-    console.log("beginning to delete products");
-    // we don't want to hard delete a product because of the association to past orders. 
-    // delete could = isActive false to not display for sale 
+    console.log("beginning to delete products", id);
+    // we don't want to hard delete a product because of the association to past orders.
+    // delete could = isActive false to not display for sale
     //& remove from un-ordered carts on frontend? isActive check inside the carts.
     const {
       rows: [product],
     } = await client.query(
       `
-            DELETE FROM products
+            UPDATE products
+            SET "isActive" = false
             WHERE id = $1
             RETURNING *;
         `,
       [id]
     );
-    console.log("finished deleting product");
+    console.log("finished deleting product", product);
     return product;
   } catch (error) {
     console.error("error deleting product");
@@ -188,5 +215,6 @@ module.exports = {
   getProductByTitle,
   getProductById,
   getProductsByAuthor,
+  getProductsByTagId,
   deleteProduct,
 };

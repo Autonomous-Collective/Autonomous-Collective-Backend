@@ -15,7 +15,7 @@ const {
   editProduct,
   getAllProducts,
   getProductByTitle,
-
+  getProductsByTagId,
   getProductById,
   getProductsByAuthor,
 
@@ -43,7 +43,6 @@ const {
   deleteUserAddress,
   getAddressByUser,
 
-
   //user cart imports
   createUserCart,
   getUserCartById,
@@ -51,13 +50,13 @@ const {
   getAllUserCartsByCartOwnerId,
   checkoutUserCart,
   deleteUserCart,
-  
+
   //cart products imports
   addProductToCart,
   removeProductFromCart,
   updateProductAmountInCart,
   getProductsByCart,
-
+  deleteProduct,
 } = require("./index");
 const {
   productsToAdd,
@@ -297,6 +296,7 @@ async function rebuildDB() {
     await getReviewByProductId(2);
 
     // User Cart Functions
+
     const createInitialCarts = userCartsToAdd.map((cart) => {
       return createUserCart(cart);
     })
