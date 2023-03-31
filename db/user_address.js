@@ -1,6 +1,5 @@
 const client = require("./client");
 
-//not tested yet
 const createUserAddress = async ({ name, address, city, state, userId }) => {
   try {
     const {
