@@ -106,9 +106,7 @@ const getAllReviews = async () => {
 const getReviewByProductId = async (id) => {
   try {
     console.log("started getting review by product id", id);
-    const {
-      rows: [review],
-    } = await client.query(
+    const { rows } = await client.query(
       `
             SELECT *
             FROM reviews
@@ -117,8 +115,8 @@ const getReviewByProductId = async (id) => {
       [id]
     );
 
-    console.log("finished getting review by product id", review);
-    return review;
+    console.log("finished getting review by product id", rows);
+    return rows;
   } catch (error) {
     console.log("error getting review by product id");
     throw error;

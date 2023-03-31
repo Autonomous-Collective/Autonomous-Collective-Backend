@@ -42,6 +42,13 @@ const {
   deleteUserAddress,
   getAddressByUser,
 
+  //user cart imports
+  createUserCart,
+  getUserCartById,
+  getUserCartByCartOwnerId,
+  getAllUserCartsByCartOwnerId,
+  checkoutUserCart,
+  deleteUserCart,
 } = require("./index");
 const {
   productsToAdd,
@@ -261,7 +268,7 @@ async function rebuildDB() {
 
     const tagNumber1 = await getTagById(1);
     console.log(tagNumber1, "I am tag number 1!!");
-    
+
     // Review Functions
     await createReview({
       score: 7,
@@ -274,6 +281,16 @@ async function rebuildDB() {
     await getAllReviews();
     await editReview(1, { title: "WE EDITED THE TITLE" });
     await getReviewByProductId(2);
+
+    // User Cart Functions
+    await createUserCart({ cartOwnerId: 1, isOrdered: false });
+    await createUserCart({ cartOwnerId: 2, isOrdered: true });
+    await createUserCart({ cartOwnerId: 1, isOrdered: false });
+    await getUserCartById(1);
+    await deleteUserCart(2);
+    await checkoutUserCart(1);
+    await getUserCartByCartOwnerId(1);
+    await getAllUserCartsByCartOwnerId(1);
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
