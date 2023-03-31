@@ -28,7 +28,18 @@ const createUser = async ({ name, email, password, isAdmin, isGuest }) => {
 const deleteUser = async (id) => {
   try {
     console.log("beginning to delete users");
-    // we will need to write getallusercarts(), deleteUserCarts(), then the function below.
+    // to fully hard-delete a user we would have to:
+    // get all carts associated with user, get all cart_products associated with that cart, remove those cart products, delete the cart
+    // remove user address associated with the user
+    // get all reviews written by user, delete all those reviews
+    // finally delete the user
+
+    // OR
+    
+    // isActive to false
+    // delete the user address
+    // randomize their email and password (security measure to not store the originals anymore)
+              // we can use bcrypt and set up Math.random(10 - 100) to pick random number for SALT_COUNT
     const {
       rows: [user],
     } = await client.query(

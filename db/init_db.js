@@ -104,7 +104,8 @@ const createTables = async () => {
       email varchar(255) UNIQUE NOT NULL,
       password varchar(255) NOT NULL,
       "isAdmin" BOOLEAN DEFAULT false,
-      "isGuest" BOOLEAN DEFAULT false
+      "isGuest" BOOLEAN DEFAULT false,
+      "isActive" BOOLEAN DEFAULT true
     );
     CREATE TABLE products(
       id SERIAL PRIMARY KEY,
@@ -114,7 +115,8 @@ const createTables = async () => {
       description varchar(255) NOT NULL,
       price INTEGER NOT NULL,
       img varchar(255),
-      quantity INTEGER NOT NULL 
+      quantity INTEGER NOT NULL,
+      "isActive" BOOLEAN DEFAULT true
     );
     CREATE TABLE tags(
       id SERIAL PRIMARY KEY,
