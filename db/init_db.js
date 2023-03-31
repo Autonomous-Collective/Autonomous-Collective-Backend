@@ -1,55 +1,55 @@
 const client = require("./client");
 
 const {
-  //user exports
-  createUser,
-  deleteUser,
-  updateUser,
-  getUser,
-  getUserByEmail,
-  getUserById,
-  getAllUsers,
-  //product exports
-  createProduct,
-  editProduct,
-  getAllProducts,
-  getProductByTitle,
+	//user exports
+	createUser,
+	deleteUser,
+	updateUser,
+	getUser,
+	getUserByEmail,
+	getUserById,
+	getAllUsers,
+	//product exports
+	createProduct,
+	editProduct,
+	getAllProducts,
+	getProductByTitle,
 
-  getProductById,
-  getProductsByAuthor,
+	getProductById,
+	getProductsByAuthor,
 
-  //tag exports
-  createTags,
-  getAllTags,
-  getTagById,
+	//tag exports
+	createTags,
+	getAllTags,
+	getTagById,
 
-  //reviews exports
-  createReview,
+	//reviews exports
+	createReview,
   editReview,
   getAllReviews,
   getReviewByProductId,
 
+	//product_tags exports
+	addTagsToProduct,
+	createProductTag,
 
-  //product_tags exports
-  addTagsToProduct,
-  createProductTag,
 } = require("./index");
 const {
-  productsToAdd,
-  usersToAdd,
-  reviewsToAdd,
-  tagsToAdd,
-  productTagsToAdd,
+	productsToAdd,
+	usersToAdd,
+	reviewsToAdd,
+	tagsToAdd,
+	productTagsToAdd,
 } = require("./dummyData");
 const reviews = require("./reviews");
 
 const dropTables = async () => {
-  try {
-    // drop tables in correct order
-    client.connect();
-    console.log("Dropping All Tables");
+	try {
+		// drop tables in correct order
+		client.connect();
+		console.log("Dropping All Tables");
 
-    await client.query(`
+		await client.query(`
     DROP TABLE IF EXISTS cart_products;
     DROP TABLE IF EXISTS product_tags;
     DROP TABLE IF EXISTS user_addresses;
@@ -61,18 +61,18 @@ const dropTables = async () => {
     
     
     `);
-    console.log("Finished Dropping Tables!");
-  } catch (error) {
-    console.error("Error Dropping Tables!");
-    throw error;
-  }
+		console.log("Finished Dropping Tables!");
+	} catch (error) {
+		console.error("Error Dropping Tables!");
+		throw error;
+	}
 };
 
 const createTables = async () => {
-  try {
-    console.log("Starting to Build Tables");
+	try {
+		console.log("Starting to Build Tables");
 
-    await client.query(`
+		await client.query(`
     CREATE TABLE users (
       id SERIAL PRIMARY KEY,
       name varchar(255) NOT NULL,
@@ -133,106 +133,115 @@ const createTables = async () => {
     
     `);
 
-    console.log("Finished Creating Tables");
-  } catch (error) {
-    console.error("Error Building Tables");
-    throw error;
-  }
+		console.log("Finished Creating Tables");
+	} catch (error) {
+		console.error("Error Building Tables");
+		throw error;
+	}
 };
 
 // create initial data functions
 
 const createInitialUsers = async () => {
-  console.log("Starting to Create Users");
-  try {
-    const users = await Promise.all(usersToAdd.map(createUser));
-    console.log(users);
-    console.log("finished creating users");
-    return users;
-  } catch (error) {
-    console.error("error creating users");
-    throw error;
-  }
+	console.log("Starting to Create Users");
+	try {
+		const users = await Promise.all(usersToAdd.map(createUser));
+		// console.log(users);
+		console.log("finished creating users");
+		return users;
+	} catch (error) {
+		console.error("error creating users");
+		throw error;
+	}
 };
 
 const createInitialTags = async () => {
-  try {
-    const tags = await Promise.all(tagsToAdd.map(createTags));
-    console.log(tags);
-    console.log("finished creating tags!");
-    return tags;
-  } catch (error) {
-    console.log("error creating tags!");
-    throw error;
-  }
+	try {
+		const tags = await Promise.all(tagsToAdd.map(createTags));
+		// console.log(tags);
+		console.log("finished creating tags!");
+		return tags;
+	} catch (error) {
+		console.log("error creating tags!");
+		throw error;
+	}
 };
 
 const createInitialProducts = async () => {
-  console.log("Starting to create products");
-  try {
-    const products = await Promise.all(productsToAdd.map(createProduct));
-    console.log(products);
-    console.log("finished creating products");
-    return products;
-  } catch (error) {
-    console.error("error creating products");
-    throw error;
-  }
+	console.log("Starting to create products");
+	try {
+		const products = await Promise.all(productsToAdd.map(createProduct));
+		// console.log(products);
+		console.log("finished creating products");
+		return products;
+	} catch (error) {
+		console.error("error creating products");
+		throw error;
+	}
 };
 
-
 const createInitialReviews = async () => {
-  console.log("Starting to create reviews");
-  try{
-    const reviews = await Promise.all(reviewsToAdd.map(createReview));
-    console.log(reviews);
-    console.log("finished creating reviews");
-    return reviews;
-  }catch(error){
-    console.log("error creating reviews");
-    throw(error);
-  }
-}
+	console.log("Starting to create reviews");
+	try {
+		const reviews = await Promise.all(reviewsToAdd.map(createReview));
+		// console.log(reviews);
+		console.log("finished creating reviews");
+		return reviews;
+	} catch (error) {
+		console.log("error creating reviews");
+		throw error;
+	}
+};
 
 async function rebuildDB() {
-  try {
-    await dropTables();
-    await createTables();
-    //initial funcs
-    await createInitialUsers();
-    await createInitialTags();
-    await createInitialProducts();
-    await createInitialReviews();
+	try {
+		await dropTables();
+		await createTables();
+		//initial funcs
+		await createInitialUsers();
+		await createInitialTags();
+		await createInitialProducts();
+		
+		await createInitialReviews();
     await createReview({score: 7, title: "our test review", content: "this review is for testing", reviewerId: 1, productId: 2});
-    //user funcs
-    // await deleteUser(4);
-    await getUser({
-      email: "Nicolerules@mymail.com",
-      password: "ojwasterrible",
-    });
-    await updateUser(4, { email: "test@test.com" });
-    await getUserById(4);
-    await getAllUsers();
-    //product funcs
-    await editProduct(3, { title: "edited title" });
-    await getAllProducts();
-    await getProductByTitle("To Kill A Mocking Bird");
-    await getProductById(1);
-    await getProductsByAuthor("Harper Lee");
+		//user funcs
+		//await deleteUser(4);
+		await getUser({
+			email: "Nicolerules@mymail.com",
+			password: "ojwasterrible",
+		});
+		await updateUser(4, { email: "test@test.com" });
+		await getUserById(4);
+		await getAllUsers();
+		// //product funcs
+		await editProduct(3, { title: "edited title" });
 
-    // const addedProductTags = productTagsToAdd.map((e) => {
-    //   addTagsToProduct(e.productId, e.tagId);
-    // });
-    // await Promise.all(addedProductTags);
+		console.log(productTagsToAdd, 'productTagsToAdd')
+		const addedProductTags = productTagsToAdd.map((e) => {
+			console.log(e,' (((')
+			addTagsToProduct(e.productId, e.tagId);
+		});
+		await Promise.all(addedProductTags);
+		await getAllProducts();
+		await getProductByTitle("To Kill A Mocking Bird");
 
-    await getTagById(1);
+		await getProductById(1);
+		await getProductsByAuthor("Harper Lee");
+
+
+		const tagNumber1 = await getTagById(1);
+		console.log(tagNumber1, 'I am tag number 1!!');
+    
     await getAllReviews();
     await editReview(1, {title: "WE EDITED THE TITLE"});
     await getReviewByProductId(2);
-  } catch (error) {
-    console.log("Error during rebuildDB");
-    throw error;
-  }
+	} catch (error) {
+		console.log("Error during rebuildDB");
+		throw error;
+	}
+
 }
 
-rebuildDB();
+rebuildDB()
+	.catch(console.error)
+	.finally(() => client.end());
