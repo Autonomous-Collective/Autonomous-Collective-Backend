@@ -25,6 +25,9 @@ const {
 
   //reviews exports
   createReview,
+  editReview,
+  getAllReviews,
+  getReviewByProductId,
 
 
   //product_tags exports
@@ -200,6 +203,7 @@ async function rebuildDB() {
     await createInitialTags();
     await createInitialProducts();
     await createInitialReviews();
+    await createReview({score: 7, title: "our test review", content: "this review is for testing", reviewerId: 1, productId: 2});
     //user funcs
     // await deleteUser(4);
     await getUser({
@@ -216,12 +220,15 @@ async function rebuildDB() {
     await getProductById(1);
     await getProductsByAuthor("Harper Lee");
 
-    const addedProductTags = productTagsToAdd.map((e) => {
-      addTagsToProduct(e.productId, e.tagId);
-    });
-    await Promise.all(addedProductTags);
+    // const addedProductTags = productTagsToAdd.map((e) => {
+    //   addTagsToProduct(e.productId, e.tagId);
+    // });
+    // await Promise.all(addedProductTags);
 
     await getTagById(1);
+    await getAllReviews();
+    await editReview(1, {title: "WE EDITED THE TITLE"});
+    await getReviewByProductId(2);
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
