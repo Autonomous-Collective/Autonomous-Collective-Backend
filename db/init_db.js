@@ -42,6 +42,7 @@ const {
   deleteUserAddress,
   getAddressByUser,
 
+
   //user cart imports
   createUserCart,
   getUserCartById,
@@ -49,6 +50,13 @@ const {
   getAllUserCartsByCartOwnerId,
   checkoutUserCart,
   deleteUserCart,
+  
+  //cart products imports
+  addProductToCart,
+  removeProductFromCart,
+  updateProductAmountInCart,
+  getProductsByCart,
+
 } = require("./index");
 const {
   productsToAdd,
