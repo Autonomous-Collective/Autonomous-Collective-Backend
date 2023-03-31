@@ -25,10 +25,14 @@ const {
 
 	//reviews exports
 	createReview,
+  editReview,
+  getAllReviews,
+  getReviewByProductId,
 
 	//product_tags exports
 	addTagsToProduct,
 	createProductTag,
+
 } = require("./index");
 const {
 	productsToAdd,
@@ -114,8 +118,8 @@ const createTables = async () => {
       address varchar(255) NOT NULL,
       city varchar(255) NOT NULL,
       state varchar(255) NOT NULL,
-      "productId" INTEGER REFERENCES users(id),
-      UNIQUE("productId", id) 
+      "userId" INTEGER REFERENCES users(id),
+      UNIQUE("userId", id) 
     );
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
@@ -199,6 +203,7 @@ async function rebuildDB() {
 		await createInitialProducts();
 		
 		await createInitialReviews();
+    await createReview({score: 7, title: "our test review", content: "this review is for testing", reviewerId: 1, productId: 2});
 		//user funcs
 		//await deleteUser(4);
 		await getUser({
@@ -225,11 +230,16 @@ async function rebuildDB() {
 
 
 		const tagNumber1 = await getTagById(1);
-		console.log(tagNumber1, 'I am tag number 1!!')
+		console.log(tagNumber1, 'I am tag number 1!!');
+    
+    await getAllReviews();
+    await editReview(1, {title: "WE EDITED THE TITLE"});
+    await getReviewByProductId(2);
 	} catch (error) {
 		console.log("Error during rebuildDB");
 		throw error;
 	}
+
 }
 
 rebuildDB()
