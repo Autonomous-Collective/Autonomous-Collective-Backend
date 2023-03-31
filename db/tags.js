@@ -36,10 +36,12 @@ const getAllTags = async () => {
 //get tag by id:
 
 const getTagById = async (id) => {
-	console.log(id,'!@#!@#!@')
+  // console.log(id,'!@#!@#!@')
   try {
-    console.log("getting tag by id, THIS IS IT", id);
-    const { rows: [tag] } = await client.query(
+    // console.log("getting tag by id, THIS IS IT", id);
+    const {
+      rows: [tag],
+    } = await client.query(
       `
             SELECT *
             FROM tags
@@ -47,7 +49,7 @@ const getTagById = async (id) => {
         `,
       [id]
     );
-    console.log(tag, "tagById, line 51");
+    // console.log(tag, "tagById, line 51");
     console.log("finished getting tag by Id");
 
     return tag;
@@ -68,7 +70,8 @@ const getTagsByProduct = async (productId) => {
       [productId]
     );
 
-    console.log(rows, "product_tags from get Tags by product");
+    // console.log(rows, "product_tags from get Tags by product");
+    return rows;
   } catch (error) {}
 };
 
