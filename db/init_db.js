@@ -42,6 +42,11 @@ const {
   deleteUserAddress,
   getAddressByUser,
 
+  //cart products imports
+  addProductToCart,
+  removeProductFromCart,
+  updateProductAmountInCart,
+  getProductsByCart,
 } = require("./index");
 const {
   productsToAdd,
@@ -261,7 +266,7 @@ async function rebuildDB() {
 
     const tagNumber1 = await getTagById(1);
     console.log(tagNumber1, "I am tag number 1!!");
-    
+
     // Review Functions
     await createReview({
       score: 7,
