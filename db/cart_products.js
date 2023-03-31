@@ -2,7 +2,7 @@ const client = require("./client");
 
 const addProductToCart = async (cartId, productId, quantity) => {
   try {
-    console.log(cartId, productId, quantity, "!!**");
+    console.log("Starting to add product to cart", cartId, productId, quantity);
     const {
       rows: [cartProduct],
     } = await client.query(

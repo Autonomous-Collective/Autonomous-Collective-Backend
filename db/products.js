@@ -1,8 +1,5 @@
 const client = require("./client");
-// const { getTagsByProduct, getTagById } = require("./");
 const { getTagsByProduct } = require("./product_tags");
-const { getTagById } = require("./tags");
-const { getReviewByProductId } = require("./reviews");
 
 const createProduct = async ({
   title,
@@ -25,7 +22,7 @@ const createProduct = async ({
         `,
       [title, author, isbn, description, price, imageUrl, quantity]
     );
-    // console.log(product, "product from createProduct");
+    console.log("Finished creating product", product);
     return product;
   } catch (error) {
     throw error;
@@ -54,7 +51,7 @@ const editProduct = async (id, fields = {}) => {
       Object.values(fields)
     );
 
-    // console.log(product, "updated product");
+    console.log("Finished editing product", product);
     return product;
   } catch (error) {
     console.error("issue updating product");
@@ -63,21 +60,11 @@ const editProduct = async (id, fields = {}) => {
 };
 
 const getAllProducts = async () => {
-  const productsToReturn = [];
   try {
     const { rows } = await client.query(`
             SELECT *
             FROM products;
         `);
-    // console.log(rows, "all products from getAllProducts");
-
-    //map through rows
-    // get all tags associated with product
-    // add that tag list to that product
-
-    // console.log(getTagsByProduct, "!!!GET TAGS BY PRODUCT FUNCTION!!!");
-
-    // **** come back here
     const updatedProducts = rows.map(async (product) => {
       const tagIdList = await getTagsByProduct(product.id);
       const tags = tagIdList.map((e) => {
@@ -88,7 +75,7 @@ const getAllProducts = async () => {
       return product;
     });
     const awaitedProducts = await Promise.all(updatedProducts);
-    console.log(awaitedProducts, "All products, should have tags attached");
+    console.log("Finished getting all products", awaitedProducts);
     return awaitedProducts;
   } catch (error) {
     console.error("error getting all products");
@@ -108,7 +95,7 @@ const getProductByTitle = async (title) => {
         `,
       [title]
     );
-    // console.log(product, "product from getProductByTitle");
+    console.log("Finished getting product by Title", product);
     return product;
   } catch (error) {
     console.error("error getting product by title");
@@ -127,7 +114,7 @@ const getProductById = async (id) => {
         `,
       [id]
     );
-    // console.log(product, "product from getProductById");
+    console.log("Finished getting product by Id", product);
     return product;
   } catch (error) {
     console.error("error getting product by Id");
@@ -144,7 +131,7 @@ const getProductsByAuthor = async (author) => {
         `,
       [author]
     );
-    // console.log(rows, "product from getProductByauthor");
+    console.log("Finished getting product by author", rows);
     return rows;
   } catch (error) {
     console.error("error getting product by author");
@@ -186,9 +173,6 @@ const getProductsByTagId = async (id) => {
 const deleteProduct = async (id) => {
   try {
     console.log("beginning to delete products", id);
-    // we don't want to hard delete a product because of the association to past orders.
-    // delete could = isActive false to not display for sale
-    //& remove from un-ordered carts on frontend? isActive check inside the carts.
     const {
       rows: [product],
     } = await client.query(

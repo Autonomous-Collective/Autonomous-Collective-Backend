@@ -1,31 +1,58 @@
 //users to add
 const usersToAdd = [
-  // add a user for all four of us as admins 
   {
     name: "Stephen",
     email: "TheKing@mymail.com",
-    password: "2stephen2quit",
+    password: "password",
     isAdmin: true,
     isGuest: false,
   },
   {
     name: "Nicole",
     email: "Nicolerules@mymail.com",
-    password: "ojwasterrible",
+    password: "password",
     isAdmin: false,
     isGuest: false,
   },
   {
     name: "Victor",
     email: "youngandrestless@mymail.com",
-    password: "bold&beautiful",
+    password: "passwordl",
     isAdmin: false,
+    isGuest: false,
+  },
+  {
+    name: "Thomas",
+    email: "thomasjohnso@gmail.com",
+    password: "password",
+    isAdmin: true,
+    isGuest: false,
+  },
+  {
+    name: "Andre",
+    email: "andre.jacques.pujol@gmail.com",
+    password: "password",
+    isAdmin: true,
+    isGuest: false,
+  },
+  {
+    name: "Alex",
+    email: "alexmiriamd@gmail.com",
+    password: "password",
+    isAdmin: true,
+    isGuest: false,
+  },
+  {
+    name: "Josie",
+    email: "parker.josie.eden@gmail.com",
+    password: "password",
+    isAdmin: true,
     isGuest: false,
   },
   {
     name: "Barbara",
     email: "barbarian@mymail.com",
-    password: "sumeriarules!",
+    password: "password",
     isAdmin: false,
     isGuest: false,
   },

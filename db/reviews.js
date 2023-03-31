@@ -1,6 +1,5 @@
 const client = require("./client");
 
-//create review! --tested- working!!!
 const createReview = async ({
   score,
   title,
@@ -28,7 +27,6 @@ const createReview = async ({
   }
 };
 
-//edit review: --tested: working!!!
 const editReview = async (id, fields = {}) => {
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
@@ -60,9 +58,7 @@ const editReview = async (id, fields = {}) => {
   }
 };
 
-//delete review!
 const deleteReview = async (id) => {
-  //code for delete review!
   try {
     console.log("Starting to delete review", id);
     const {
@@ -84,7 +80,6 @@ const deleteReview = async (id) => {
   }
 };
 
-//get all reviews! --tested: working!!
 const getAllReviews = async () => {
   try {
     console.log("starting to get all reviews");
@@ -102,7 +97,6 @@ const getAllReviews = async () => {
   }
 };
 
-//get review by product id -- tested- working!!!
 const getReviewByProductId = async (id) => {
   try {
     console.log("started getting review by product id", id);
