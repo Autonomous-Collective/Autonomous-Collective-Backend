@@ -22,12 +22,15 @@ const {
   createTags,
   getAllTags,
   getTagById,
+  getTagsByProduct,
+  deleteTag,
 
   //reviews exports
   createReview,
   editReview,
   getAllReviews,
   getReviewByProductId,
+  deleteReview,
 
   //product_tags exports
   addTagsToProduct,
@@ -38,6 +41,7 @@ const {
   editUserAddress,
   deleteUserAddress,
   getAddressByUser,
+
 } = require("./index");
 const {
   productsToAdd,
@@ -207,15 +211,8 @@ async function rebuildDB() {
     await createInitialUsers();
     await createInitialTags();
     await createInitialProducts();
-
     await createInitialReviews();
-    await createReview({
-      score: 7,
-      title: "our test review",
-      content: "this review is for testing",
-      reviewerId: 1,
-      productId: 2,
-    });
+
     //user funcs
     //await deleteUser(4);
     await getUser({
@@ -223,6 +220,9 @@ async function rebuildDB() {
       password: "ojwasterrible",
     });
     await updateUser(4, { email: "test@test.com" });
+    await getUserById(4);
+    await getAllUsers();
+    // Product Functions
 
     await getUserById(4);
 
@@ -248,6 +248,11 @@ async function rebuildDB() {
       addTagsToProduct(e.productId, e.tagId);
     });
     await Promise.all(addedProductTags);
+    // Tag Functions
+    await createTags({ name: "Manga" });
+    await getAllTags();
+    await getTagsByProduct();
+    await getAllProducts();
     console.log(await getAllProducts(), "LINE 255");
     await getProductByTitle("To Kill A Mocking Bird");
 
@@ -256,6 +261,15 @@ async function rebuildDB() {
 
     const tagNumber1 = await getTagById(1);
     console.log(tagNumber1, "I am tag number 1!!");
+    
+    // Review Functions
+    await createReview({
+      score: 7,
+      title: "our test review",
+      content: "this review is for testing",
+      reviewerId: 1,
+      productId: 2,
+    });
 
     await getAllReviews();
     await editReview(1, { title: "WE EDITED THE TITLE" });
