@@ -35,6 +35,13 @@ const {
   //product_tags exports
   addTagsToProduct,
   createProductTag,
+
+  //user address imports
+  createUserAddress,
+  editUserAddress,
+  deleteUserAddress,
+  getAddressByUser,
+
 } = require("./index");
 const {
   productsToAdd,
@@ -42,6 +49,7 @@ const {
   reviewsToAdd,
   tagsToAdd,
   productTagsToAdd,
+  userAddresses,
 } = require("./dummyData");
 const reviews = require("./reviews");
 
@@ -215,6 +223,23 @@ async function rebuildDB() {
     await getUserById(4);
     await getAllUsers();
     // Product Functions
+
+    await getUserById(4);
+
+    const addedUserAddresses = userAddresses.map((address) => {
+      createUserAddress(address);
+    });
+    await Promise.all(addedUserAddresses);
+
+    console.log(await getAddressByUser(1), "LINE 234");
+    console.log(
+      await editUserAddress(1, { name: "Jimbo" }),
+      "user addred updated"
+    );
+    console.log(await deleteUserAddress(1), " user address deleted");
+
+    console.log(await getAllUsers(), "LINE 236");
+    // //product funcs
     await editProduct(3, { title: "edited title" });
 
     console.log(productTagsToAdd, "productTagsToAdd");
@@ -228,6 +253,7 @@ async function rebuildDB() {
     await getAllTags();
     await getTagsByProduct();
     await getAllProducts();
+    console.log(await getAllProducts(), "LINE 255");
     await getProductByTitle("To Kill A Mocking Bird");
 
     await getProductById(1);
@@ -235,6 +261,7 @@ async function rebuildDB() {
 
     const tagNumber1 = await getTagById(1);
     console.log(tagNumber1, "I am tag number 1!!");
+    
     // Review Functions
     await createReview({
       score: 7,
@@ -243,6 +270,8 @@ async function rebuildDB() {
       reviewerId: 1,
       productId: 2,
     });
+
+    await getAllReviews();
     await editReview(1, { title: "WE EDITED THE TITLE" });
     await getReviewByProductId(2);
   } catch (error) {

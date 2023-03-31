@@ -33,18 +33,21 @@ const usersToAdd = [
 //user addresses
 const userAddresses = [
   {
+    name: "Jim",
     address: "7492 Wentworth Street",
     city: "Oklahoma City",
     state: "OK",
     userId: 1,
   },
   {
+    name: "Sara",
     address: "507 Clinton Street",
     city: "Jacksonville",
     state: "FL",
     userId: 3,
   },
   {
+    name: "Blob",
     address: "9316 Center Rd.",
     city: "Houston",
     state: "TX",

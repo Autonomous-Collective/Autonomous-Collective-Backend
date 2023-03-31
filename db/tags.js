@@ -74,7 +74,6 @@ const getTagsByProduct = async (productId) => {
         `,
       [productId]
     );
-
     console.log("Finished getting Tags by Product", rows);
     return rows;
   } catch (error) {

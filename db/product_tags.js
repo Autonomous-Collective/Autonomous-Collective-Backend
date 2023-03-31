@@ -5,7 +5,7 @@ const client = require("./client");
 const { getTagById } = require("./tags");
 // console.log(result, "IN PRODUCT_TAGS");
 async function createProductTag(productId, tagId) {
-  console.log(productId, tagId, "productId, tagId in create product tag");
+  console.log("Creating product tag pair");
   try {
     const {
       rows: [productTag],
@@ -18,9 +18,10 @@ async function createProductTag(productId, tagId) {
       `,
       [productId, tagId]
     );
-    console.log(productTag, "productTag");
+    // console.log(productTag, "productTag");
     return productTag;
   } catch (error) {
+    console.error("error creating product tag");
     throw error;
   }
 }
@@ -39,14 +40,14 @@ async function addTagsToProduct(productId, tagIdList) {
     // console.log(tagIdPromises, "LINE 32 in product tags");
     // const tagList = await Promise.all(tagIdPromises);
     // console.log(tagList, "line 34");
-console.log(productId, tagIdList, '7464646')
+    // console.log(productId, tagIdList, '7464646')
     const createProductTagPromises = tagIdList.map((tagId) =>
       createProductTag(productId, tagId)
     );
 
     const createdProductTags = await Promise.all(createProductTagPromises);
 
-    console.log(createdProductTags, "!!!!! product tag promises");
+    // console.log(createdProductTags, "!!!!! product tag promises");
     // console.log(getProductById, "GET PRODUCT BY ID!!!");
     // const product = await getProductById(productId);
 
