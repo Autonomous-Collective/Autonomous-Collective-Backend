@@ -1,6 +1,5 @@
 const client = require("./client");
 
-//create tags!:
 const createTags = async ({ name }) => {
   try {
     console.log("Starting to create tags", name);
@@ -23,7 +22,6 @@ const createTags = async ({ name }) => {
   }
 };
 
-//get all tags:
 const getAllTags = async () => {
   try {
     console.log("Starting to Get All Tags");
@@ -38,8 +36,6 @@ const getAllTags = async () => {
     throw error;
   }
 };
-
-//get tag by id:
 
 const getTagById = async (id) => {
   try {

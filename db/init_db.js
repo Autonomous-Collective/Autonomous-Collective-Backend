@@ -9,6 +9,7 @@ const {
   getUserByEmail,
   getUserById,
   getAllUsers,
+  createGuestUser,
 
   //product exports
   createProduct,
@@ -176,7 +177,6 @@ const createInitialUsers = async () => {
   console.log("Starting to Create Users");
   try {
     const users = await Promise.all(usersToAdd.map(createUser));
-    // console.log(users);
     console.log("finished creating users");
     return users;
   } catch (error) {
@@ -188,7 +188,6 @@ const createInitialUsers = async () => {
 const createInitialTags = async () => {
   try {
     const tags = await Promise.all(tagsToAdd.map(createTags));
-    // console.log(tags);
     console.log("finished creating tags!");
     return tags;
   } catch (error) {
@@ -201,7 +200,6 @@ const createInitialProducts = async () => {
   console.log("Starting to create products");
   try {
     const products = await Promise.all(productsToAdd.map(createProduct));
-    // console.log(products);
     console.log("finished creating products");
     return products;
   } catch (error) {
@@ -214,7 +212,6 @@ const createInitialReviews = async () => {
   console.log("Starting to create reviews");
   try {
     const reviews = await Promise.all(reviewsToAdd.map(createReview));
-    // console.log(reviews);
     console.log("finished creating reviews");
     return reviews;
   } catch (error) {
@@ -232,55 +229,55 @@ async function rebuildDB() {
     await createInitialTags();
     await createInitialProducts();
     await createInitialReviews();
+    const addedUserAddresses = userAddresses.map((address) => {
+      createUserAddress(address);
+    });
+    await Promise.all(addedUserAddresses);
+    const addedProductTags = productTagsToAdd.map((e) => {
+      addTagsToProduct(e.productId, e.tagId);
+    });
+    await Promise.all(addedProductTags);
+    const createInitialCarts = userCartsToAdd.map((cart) => {
+      return createUserCart(cart);
+    });
+    await Promise.all(createInitialCarts);
+    const addedProductsToCart = cartProductsToAdd.map((cartProduct) => {
+      return addProductToCart(
+        cartProduct.cartId,
+        cartProduct.productId,
+        cartProduct.quantity
+      );
+    });
+    await Promise.all(addedProductsToCart);
 
     //user funcs
-    //await deleteUser(4);
     await getUser({
       email: "Nicolerules@mymail.com",
       password: "ojwasterrible",
     });
     await updateUser(4, { email: "test@test.com" });
     await getUserById(4);
+    await deleteUser(4);
+    await createGuestUser();
     await getAllUsers();
-    // Product Functions
 
-    await getUserById(4);
+    // user address functions
+    await getAddressByUser(1);
+    await editUserAddress(1, { name: "Jimbo" });
+    await deleteUserAddress(1);
 
-    const addedUserAddresses = userAddresses.map((address) => {
-      createUserAddress(address);
-    });
-    await Promise.all(addedUserAddresses);
-
-    console.log(await getAddressByUser(1), "LINE 234");
-    console.log(
-      await editUserAddress(1, { name: "Jimbo" }),
-      "user addred updated"
-    );
-    console.log(await deleteUserAddress(1), " user address deleted");
-
-    console.log(await getAllUsers(), "LINE 236");
     // //product funcs
     await editProduct(3, { title: "edited title" });
-
-    console.log(productTagsToAdd, "productTagsToAdd");
-    const addedProductTags = productTagsToAdd.map((e) => {
-      console.log(e, " (((");
-      addTagsToProduct(e.productId, e.tagId);
-    });
-    await Promise.all(addedProductTags);
-    // Tag Functions
-    await createTags({ name: "Manga" });
-    await getAllTags();
-    await getTagsByProduct();
     await getAllProducts();
-    console.log(await getAllProducts(), "LINE 255");
     await getProductByTitle("To Kill A Mocking Bird");
-
     await getProductById(1);
     await getProductsByAuthor("Harper Lee");
 
-    const tagNumber1 = await getTagById(1);
-    console.log(tagNumber1, "I am tag number 1!!");
+    // Tag Functions
+    await createTags({ name: "Manga" });
+    await getAllTags();
+    await getTagsByProduct(3);
+    await getTagById(1);
 
     // Review Functions
     await createReview({
@@ -295,38 +292,17 @@ async function rebuildDB() {
     await editReview(1, { title: "WE EDITED THE TITLE" });
     await getReviewByProductId(2);
 
-    // User Cart Functions
-
-    const createInitialCarts = userCartsToAdd.map((cart) => {
-      return createUserCart(cart);
-    })
-    await Promise.all(createInitialCarts);
-
-    // await createUserCart({ cartOwnerId: 1, isOrdered: false });
-    // await createUserCart({ cartOwnerId: 2, isOrdered: true });
-    // await createUserCart({ cartOwnerId: 1, isOrdered: false });
-    // await getUserCartById(1);
-    // await deleteUserCart(2);
-    // await checkoutUserCart(1);
-    // await getUserCartByCartOwnerId(1);
-    // await getAllUserCartsByCartOwnerId(1);
-
     //Add products to cart functions
-
-    const addedProductsToCart = cartProductsToAdd.map((cartProduct) => {
-     return addProductToCart(cartProduct.cartId, cartProduct.productId, cartProduct.quantity);
-    });
-    await Promise.all(addedProductsToCart);
-    console.log(addedProductsToCart, "PRODUCTS IN CART");
-
-    await removeProductFromCart(1,1);
-    await updateProductAmountInCart(2,2,5);
+    await removeProductFromCart(2, 2);
+    await updateProductAmountInCart(1, 1, 5);
     await getProductsByCart(4);
 
-    //delete user test
-
-    await deleteUser(4);
-
+    // User Cart Functions
+    await getUserCartById(1);
+    await deleteUserCart(2);
+    await getUserCartByCartOwnerId(1);
+    await checkoutUserCart(1);
+    await getAllUserCartsByCartOwnerId(1);
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
