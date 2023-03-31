@@ -2,22 +2,24 @@ const client = require("./client");
 
 const addProductToCart = async (cartId, productId, quantity) => {
   try {
+    console.log(cartId, productId, quantity, "!!**");
     const {
       rows: [cartProduct],
     } = await client.query(
       `
-        INSERT into cart_products("cartId","productId","quantity")
-        VALUES($1,$2,$3)
-        RETURNING *
-        
+        INSERT INTO cart_products ("cartId", "productId", quantity)
+        VALUES ($1, $2, $3)
+        ON CONFLICT ("cartId", "productId") DO NOTHING
+        RETURNING *;
         `,
       [cartId, productId, quantity]
     );
 
-    console.log("added product to cart");
+    console.log(cartProduct, "added product to cart");
     return cartProduct;
   } catch (error) {
     console.error("error creating cart product");
+    throw error;
   }
 };
 
@@ -34,7 +36,7 @@ const removeProductFromCart = async (cartId, productId) => {
         `,
       [cartId, productId]
     );
-    console.log("removed product from cart");
+    console.log(cartProduct, "removed product from cart");
     return cartProduct;
   } catch (error) {
     console.error("Error removing product from cart");
@@ -55,7 +57,7 @@ const updateProductAmountInCart = async (cartId, productId, quantity) => {
         `,
       [cartId, productId, quantity]
     );
-    console.log("updated quantity");
+    console.log(cartProduct, "updated quantity");
     return cartProduct;
   } catch (error) {
     console.error("error updating cart");
@@ -66,16 +68,13 @@ const getProductsByCart = async (cartId) => {
   try {
     const { rows } = await client.query(
       `
-        
         SELECT * from cart_products
+        JOIN products ON cart_products."productId" = products.id
         WHERE "cartId" = $1
-        
-        
-        
         `,
       [cartId]
     );
-    console.log("getting all products from cart");
+    console.log(rows, "all products by cart");
     return rows;
   } catch (error) {
     console.error("Error getting products in cart");

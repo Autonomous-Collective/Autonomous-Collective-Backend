@@ -9,6 +9,7 @@ const {
   getUserByEmail,
   getUserById,
   getAllUsers,
+
   //product exports
   createProduct,
   editProduct,
@@ -65,6 +66,8 @@ const {
   tagsToAdd,
   productTagsToAdd,
   userAddresses,
+  cartProductsToAdd,
+  userCartsToAdd,
 } = require("./dummyData");
 const reviews = require("./reviews");
 
@@ -131,7 +134,8 @@ const createTables = async () => {
       id SERIAL PRIMARY KEY,
       "productId" INTEGER REFERENCES products(id),
       "cartId" INTEGER REFERENCES user_carts(id),
-      quantity INTEGER NOT NULL
+      quantity INTEGER NOT NULL,
+      UNIQUE("productId", "cartId")
     );
     CREATE TABLE product_tags(
       id SERIAL PRIMARY KEY,
@@ -293,14 +297,36 @@ async function rebuildDB() {
     await getReviewByProductId(2);
 
     // User Cart Functions
-    await createUserCart({ cartOwnerId: 1, isOrdered: false });
-    await createUserCart({ cartOwnerId: 2, isOrdered: true });
-    await createUserCart({ cartOwnerId: 1, isOrdered: false });
-    await getUserCartById(1);
-    await deleteUserCart(2);
-    await checkoutUserCart(1);
-    await getUserCartByCartOwnerId(1);
-    await getAllUserCartsByCartOwnerId(1);
+    const createInitialCarts = userCartsToAdd.map((cart) => {
+      return createUserCart(cart);
+    })
+    await Promise.all(createInitialCarts);
+
+    // await createUserCart({ cartOwnerId: 1, isOrdered: false });
+    // await createUserCart({ cartOwnerId: 2, isOrdered: true });
+    // await createUserCart({ cartOwnerId: 1, isOrdered: false });
+    // await getUserCartById(1);
+    // await deleteUserCart(2);
+    // await checkoutUserCart(1);
+    // await getUserCartByCartOwnerId(1);
+    // await getAllUserCartsByCartOwnerId(1);
+
+    //Add products to cart functions
+
+    const addedProductsToCart = cartProductsToAdd.map((cartProduct) => {
+     return addProductToCart(cartProduct.cartId, cartProduct.productId, cartProduct.quantity);
+    });
+    await Promise.all(addedProductsToCart);
+    console.log(addedProductsToCart, "PRODUCTS IN CART");
+
+    await removeProductFromCart(1,1);
+    await updateProductAmountInCart(2,2,5);
+    await getProductsByCart(4);
+
+    //delete user test
+
+    await deleteUser(4);
+
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
