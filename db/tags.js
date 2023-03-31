@@ -3,6 +3,7 @@ const client = require("./client");
 //create tags!:
 const createTags = async ({ name }) => {
   try {
+    console.log("Starting to create tags", name);
     const {
       rows: [tag],
     } = await client.query(
@@ -14,8 +15,10 @@ const createTags = async ({ name }) => {
             `,
       [name]
     );
+    console.log("Finished creating tags", tag);
     return tag;
   } catch (error) {
+    console.log("Error creating tags!");
     throw error;
   }
 };
@@ -23,12 +26,15 @@ const createTags = async ({ name }) => {
 //get all tags:
 const getAllTags = async () => {
   try {
+    console.log("Starting to Get All Tags");
     const { rows } = await client.query(`
         SELECT * 
         FROM tags;
        `);
+    console.log("This is all tags", rows);
     return rows;
   } catch (error) {
+    console.log("Error Getting All Tags!!");
     throw error;
   }
 };
@@ -36,10 +42,11 @@ const getAllTags = async () => {
 //get tag by id:
 
 const getTagById = async (id) => {
-	console.log(id,'!@#!@#!@')
   try {
-    console.log("getting tag by id, THIS IS IT", id);
-    const { rows: [tag] } = await client.query(
+    console.log("Starting to get tag by id", id);
+    const {
+      rows: [tag],
+    } = await client.query(
       `
             SELECT *
             FROM tags
@@ -47,8 +54,7 @@ const getTagById = async (id) => {
         `,
       [id]
     );
-    console.log(tag, "tagById, line 51");
-    console.log("finished getting tag by Id");
+    console.log("finished getting tag by Id", tag);
 
     return tag;
   } catch (error) {
@@ -59,6 +65,7 @@ const getTagById = async (id) => {
 
 const getTagsByProduct = async (productId) => {
   try {
+    console.log("Starting to get Tags by Product", productId);
     const { rows } = await client.query(
       `
         SELECT *
@@ -68,12 +75,40 @@ const getTagsByProduct = async (productId) => {
       [productId]
     );
 
-    console.log(rows, "product_tags from get Tags by product");
-  } catch (error) {}
+    console.log("Finished getting Tags by Product", rows);
+    return rows;
+  } catch (error) {
+    console.log(error, "Failed to get Tag by Product");
+    throw error;
+  }
+};
+
+const deleteTag = async (id) => {
+  try {
+    console.log("Starting to delete tag", id);
+    const {
+      rows: [tag],
+    } = await client.query(
+      `
+      DELETE FROM tags
+      WHERE id = $1
+      RETURNING *;
+      `,
+      [id]
+    );
+
+    console.log("Finished deleting tag");
+    return tag;
+  } catch (error) {
+    console.log(error, "Failed to delete tag");
+    throw error;
+  }
 };
 
 module.exports = {
   createTags,
   getAllTags,
   getTagById,
+  getTagsByProduct,
+  deleteTag,
 };
