@@ -14,7 +14,7 @@ const {
   editProduct,
   getAllProducts,
   getProductByTitle,
-
+  getProductsByTagId,
   getProductById,
   getProductsByAuthor,
 
@@ -42,7 +42,6 @@ const {
   deleteUserAddress,
   getAddressByUser,
 
-
   //user cart imports
   createUserCart,
   getUserCartById,
@@ -50,13 +49,13 @@ const {
   getAllUserCartsByCartOwnerId,
   checkoutUserCart,
   deleteUserCart,
-  
+
   //cart products imports
   addProductToCart,
   removeProductFromCart,
   updateProductAmountInCart,
   getProductsByCart,
-
+  deleteProduct,
 } = require("./index");
 const {
   productsToAdd,
@@ -301,6 +300,7 @@ async function rebuildDB() {
     await checkoutUserCart(1);
     await getUserCartByCartOwnerId(1);
     await getAllUserCartsByCartOwnerId(1);
+    await getProductsByTagId(1);
   } catch (error) {
     console.log("Error during rebuildDB");
     throw error;
