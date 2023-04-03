@@ -17,7 +17,8 @@ server.use(express.json());
 // here's our API
 server.use("/api", require("./api"));
 
-//error handeler
+
+//error handler
 server.use((error, req, res, next) => {
   res.send({
     name: error.name,
@@ -25,7 +26,7 @@ server.use((error, req, res, next) => {
   });
 });
 
-//404 handeler
+//404 handler
 
 server.use("*", (req, res, next) => {
   res.send(
