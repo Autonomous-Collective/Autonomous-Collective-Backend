@@ -9,8 +9,6 @@ const morgan = require("morgan");
 apiRouter.use(cors());
 apiRouter.use(morgan("dev"));
 
-//404 handeler
-
 //req.user setup
 apiRouter.use(async (req, res, next) => {
   const prefix = "Bearer ";
@@ -47,12 +45,6 @@ apiRouter.use((req, res, next) => {
   next();
 });
 
-apiRouter.get("/", (req, res, next) => {
-  res.send({
-    message: "API is under construction!",
-  });
-});
-
 apiRouter.get("/health", (req, res, next) => {
   res.send({
     healthy: true,
@@ -75,7 +67,7 @@ apiRouter.use((error, req, res, next) => {
 
 //404 handeler
 
-apiRouter.use((req, res, next) => {
+apiRouter.use("*", (req, res, next) => {
   res.send(
     `<div>
     <h1>404, This Page Doesnt Exist<h1>
