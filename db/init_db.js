@@ -304,7 +304,7 @@ async function rebuildDB() {
     await checkoutUserCart(1);
     await getAllUserCartsByCartOwnerId(1);
   } catch (error) {
-    console.log("Error during rebuildDB");
+    console.error("Error during rebuildDB");
     throw error;
   }
 }
