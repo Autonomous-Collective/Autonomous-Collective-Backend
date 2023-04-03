@@ -4,7 +4,11 @@ const { getUserByEmail, createUser } = require("../db/users");
 const usersRouter = express.Router();
 const bcrypt = require("bcrypt");
 const { requireUser } = require("./utils");
-const { getUserCartByCartOwnerId, createUserCart } = require("../db");
+const {
+  getUserCartByCartOwnerId,
+  getAllUserCartsByCartOwnerId,
+  createUserCart,
+} = require("../db");
 
 //user routes will go here
 
@@ -110,7 +114,7 @@ usersRouter.post("/login", async (req, res, next) => {
 
 // GET /api/users/:userId/cart
 
-usersRouter.get("/:userId/cart", requireUser, async (req, res, next) => {
+usersRouter.get("/:userId/cart", async (req, res, next) => {
   try {
     const { userId } = req.params;
     console.log("this is cartId", userId);

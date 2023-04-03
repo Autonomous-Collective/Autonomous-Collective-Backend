@@ -308,6 +308,11 @@ const cartProductsToAdd = [
   },
   {
     productId: 2,
+    cartId: 1,
+    quantity: 1,
+  },
+  {
+    productId: 2,
     cartId: 2,
     quantity: 3,
   },

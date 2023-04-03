@@ -295,7 +295,7 @@ async function rebuildDB() {
     //Add products to cart functions
     await removeProductFromCart(2, 2);
     await updateProductAmountInCart(1, 1, 5);
-    await getProductsByCart(4);
+    await getProductsByCart(1);
 
     // User Cart Functions
     await getUserCartById(1);
