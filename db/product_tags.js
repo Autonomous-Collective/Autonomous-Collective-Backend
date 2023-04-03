@@ -17,7 +17,7 @@ async function createProductTag(productId, tagId) {
     console.log("Finished creating product tag", productTag);
     return productTag;
   } catch (error) {
-    console.error("error creating product tag");
+    console.error("Error creating product tag");
     throw error;
   }
 }

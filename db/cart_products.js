@@ -18,7 +18,7 @@ const addProductToCart = async (cartId, productId, quantity) => {
     console.log(cartProduct, "added product to cart");
     return cartProduct;
   } catch (error) {
-    console.error("error creating cart product");
+    console.error("Error creating cart product");
     throw error;
   }
 };
@@ -40,6 +40,7 @@ const removeProductFromCart = async (cartId, productId) => {
     return cartProduct;
   } catch (error) {
     console.error("Error removing product from cart");
+    throw error;
   }
 };
 
@@ -61,6 +62,7 @@ const updateProductAmountInCart = async (cartId, productId, quantity) => {
     return cartProduct;
   } catch (error) {
     console.error("error updating cart");
+    throw error;
   }
 };
 
@@ -78,6 +80,7 @@ const getProductsByCart = async (cartId) => {
     return rows;
   } catch (error) {
     console.error("Error getting products in cart");
+    throw error;
   }
 };
 

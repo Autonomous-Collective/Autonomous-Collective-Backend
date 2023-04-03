@@ -16,7 +16,7 @@ const createUserCart = async ({ cartOwnerId, isOrdered }) => {
     console.log("Finished creating user cart", userCart);
     return userCart;
   } catch (error) {
-    console.log("Error creating user cart!");
+    console.error("Error creating user cart!");
     throw error;
   }
 };
@@ -36,7 +36,7 @@ const getUserCartById = async (id) => {
     console.log("Finished getting user cart by id", userCart);
     return userCart;
   } catch (error) {
-    console.log("Error getting user cart by id");
+    console.error("Error getting user cart by id");
     throw error;
   }
 };
@@ -56,7 +56,7 @@ const getUserCartByCartOwnerId = async (cartOwnerId) => {
     console.log("Finished getting user cart by Cart Owner Id", userCart);
     return userCart;
   } catch (error) {
-    console.log("Error getting user cart by Cart Owner Id");
+    console.error("Error getting user cart by Cart Owner Id");
     throw error;
   }
 };
@@ -73,7 +73,7 @@ const getAllUserCartsByCartOwnerId = async (cartOwnerId) => {
     console.log("Finished getting all user carts by Cart Owner Id", rows);
     return rows;
   } catch (error) {
-    console.log("Error getting all user carts by Cart Owner Id");
+    console.error("Error getting all user carts by Cart Owner Id");
     throw error;
   }
 };
@@ -95,7 +95,7 @@ const checkoutUserCart = async (id) => {
 
     console.log("Finished checking out user cart", userCart);
   } catch {
-    console.log("Error checking out user cart");
+    console.error("Error checking out user cart");
     throw error;
   }
 };
@@ -115,7 +115,7 @@ const deleteUserCart = async (id) => {
     console.log("Finished deleting user cart", userCart);
     return userCart;
   } catch (error) {
-    console.log("Error deleting User Cart");
+    console.error("Error deleting User Cart");
     throw error;
   }
 };
