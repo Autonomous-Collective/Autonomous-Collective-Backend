@@ -17,6 +17,16 @@ server.use(express.json());
 // here's our API
 server.use("/api", require("./api"));
 
+//404 handeler
+
+server.use("*", (req, res, next) => {
+  res.send(
+    `<div>
+    <h1>404, This Page Doesnt Exist<h1>
+    </div>`
+  );
+});
+
 // bring in the DB connection
 const client = require("./db/client");
 

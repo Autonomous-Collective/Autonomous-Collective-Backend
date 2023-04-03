@@ -3,11 +3,6 @@ const apiRouter = require("express").Router();
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
 const { getUserById } = require("../db/");
-const cors = require("cors");
-const morgan = require("morgan");
-
-apiRouter.use(cors());
-apiRouter.use(morgan("dev"));
 
 //req.user setup
 apiRouter.use(async (req, res, next) => {
