@@ -17,6 +17,15 @@ server.use(express.json());
 // here's our API
 server.use("/api", require("./api"));
 
+
+//error handler
+server.use((error, req, res, next) => {
+  res.send({
+    name: error.name,
+    message: error.message,
+  });
+});
+
 //404 handler
 
 server.use("*", (req, res, next) => {

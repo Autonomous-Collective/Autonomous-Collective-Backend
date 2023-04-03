@@ -59,25 +59,6 @@ const getTagById = async (id) => {
   }
 };
 
-const getTagsByProduct = async (productId) => {
-  try {
-    console.log("Starting to get Tags by Product", productId);
-    const { rows } = await client.query(
-      `
-        SELECT *
-        FROM product_tags
-        WHERE "productId" = $1
-        `,
-      [productId]
-    );
-    console.log("Finished getting Tags by Product", rows);
-    return rows;
-  } catch (error) {
-    console.error("Failed to get Tag by Product");
-    throw error;
-  }
-};
-
 const deleteTag = async (id) => {
   try {
     console.log("Starting to delete tag", id);
@@ -103,6 +84,5 @@ module.exports = {
   createTags,
   getAllTags,
   getTagById,
-  getTagsByProduct,
   deleteTag,
 };
