@@ -17,7 +17,7 @@ server.use(express.json());
 // here's our API
 server.use("/api", require("./api"));
 
-//404 handeler
+//404 handler
 
 server.use("*", (req, res, next) => {
   res.send(
