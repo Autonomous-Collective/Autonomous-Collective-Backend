@@ -31,7 +31,7 @@ const {
   createReview,
   editReview,
   getAllReviews,
-  getReviewByProductId,
+  getReviewsByProductId,
   deleteReview,
 
   //product_tags exports
@@ -290,7 +290,7 @@ async function rebuildDB() {
 
     await getAllReviews();
     await editReview(1, { title: "WE EDITED THE TITLE" });
-    await getReviewByProductId(2);
+    await getReviewsByProductId(2);
 
     //Add products to cart functions
     await removeProductFromCart(2, 2);

@@ -5,6 +5,7 @@ const {
     getProductById,
     getProductsByTagId,
     getProductsByAuthor,
+    getReviewsByProductId,
 } = require("../db");
 
 //GET all products
@@ -78,7 +79,30 @@ productsRouter.get("/author/:author", async(req, res, next) => {
     }catch(error){
         next(error);
     }
-})
+});
+
+//GET specific product's reviews
+productsRouter.get("/reviews/:productId", async (req, res, next) => {
+    const productId = req.params.productId;
+    try{
+        const reviews = await getReviewsByProductId(productId);
+        if(!reviews.length){
+            res.status(255);
+            next({
+                name: "GetReviewsByProductError",
+                message: "There may be no reviews for this product"
+            })
+        } else {
+            res.send(reviews);
+        }
+    } catch(error){
+        next(error);
+    }
+});
+
+//POST user create a review on specific product
+productsRouter.post("")
+
 
 
 module.exports = productsRouter;

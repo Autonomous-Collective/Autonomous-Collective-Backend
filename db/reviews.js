@@ -97,7 +97,7 @@ const getAllReviews = async () => {
   }
 };
 
-const getReviewByProductId = async (id) => {
+const getReviewsByProductId = async (id) => {
   try {
     console.log("started getting review by product id", id);
     const { rows } = await client.query(
@@ -121,6 +121,6 @@ module.exports = {
   createReview: createReview,
   editReview: editReview,
   getAllReviews: getAllReviews,
-  getReviewByProductId: getReviewByProductId,
+  getReviewsByProductId: getReviewsByProductId,
   deleteReview: deleteReview,
 };
