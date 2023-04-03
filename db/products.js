@@ -25,6 +25,7 @@ const createProduct = async ({
     console.log("Finished creating product", product);
     return product;
   } catch (error) {
+    console.error("Error creating product");
     throw error;
   }
 };
@@ -54,7 +55,7 @@ const editProduct = async (id, fields = {}) => {
     console.log("Finished editing product", product);
     return product;
   } catch (error) {
-    console.error("issue updating product");
+    console.error("Error updating product");
     throw error;
   }
 };
@@ -78,7 +79,7 @@ const getAllProducts = async () => {
     console.log("Finished getting all products", awaitedProducts);
     return awaitedProducts;
   } catch (error) {
-    console.error("error getting all products");
+    console.error("Error getting all products");
     throw error;
   }
 };
@@ -98,7 +99,7 @@ const getProductByTitle = async (title) => {
     console.log("Finished getting product by Title", product);
     return product;
   } catch (error) {
-    console.error("error getting product by title");
+    console.error("Error getting product by title");
     throw error;
   }
 };
@@ -117,7 +118,7 @@ const getProductById = async (id) => {
     console.log("Finished getting product by Id", product);
     return product;
   } catch (error) {
-    console.error("error getting product by Id");
+    console.error("Error getting product by Id");
     throw error;
   }
 };
@@ -134,7 +135,7 @@ const getProductsByAuthor = async (author) => {
     console.log("Finished getting product by author", rows);
     return rows;
   } catch (error) {
-    console.error("error getting product by author");
+    console.error("Error getting product by author");
     throw error;
   }
 };
@@ -187,7 +188,7 @@ const deleteProduct = async (id) => {
     console.log("finished deleting product", product);
     return product;
   } catch (error) {
-    console.error("error deleting product");
+    console.error("Error deleting product");
     throw error;
   }
 };

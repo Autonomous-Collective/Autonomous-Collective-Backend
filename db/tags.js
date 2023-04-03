@@ -17,7 +17,7 @@ const createTags = async ({ name }) => {
     console.log("Finished creating tags", tag);
     return tag;
   } catch (error) {
-    console.log("Error creating tags!");
+    console.error("Error creating tags!");
     throw error;
   }
 };
@@ -32,7 +32,7 @@ const getAllTags = async () => {
     console.log("This is all tags", rows);
     return rows;
   } catch (error) {
-    console.log("Error Getting All Tags!!");
+    console.error("Error Getting All Tags!!");
     throw error;
   }
 };
@@ -54,7 +54,7 @@ const getTagById = async (id) => {
 
     return tag;
   } catch (error) {
-    console.log(error, "failed to get tag by id");
+    console.error("failed to get tag by id");
     throw error;
   }
 };
@@ -73,7 +73,7 @@ const getTagsByProduct = async (productId) => {
     console.log("Finished getting Tags by Product", rows);
     return rows;
   } catch (error) {
-    console.log(error, "Failed to get Tag by Product");
+    console.error("Failed to get Tag by Product");
     throw error;
   }
 };
@@ -91,11 +91,10 @@ const deleteTag = async (id) => {
       `,
       [id]
     );
-
     console.log("Finished deleting tag");
     return tag;
   } catch (error) {
-    console.log(error, "Failed to delete tag");
+    console.error("Error deleting tags");
     throw error;
   }
 };

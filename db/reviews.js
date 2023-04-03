@@ -22,7 +22,7 @@ const createReview = async ({
     console.log("Finished creating review", review);
     return review;
   } catch (error) {
-    console.log("Error Creating Review");
+    console.error("Error Creating Review");
     throw error;
   }
 };
@@ -53,7 +53,7 @@ const editReview = async (id, fields = {}) => {
     console.log("Finished Editing Review", review);
     return review;
   } catch (error) {
-    console.log("Error Editing Review");
+    console.error("Error Editing Review");
     throw error;
   }
 };
@@ -75,7 +75,7 @@ const deleteReview = async (id) => {
     console.log("Finished deleting review");
     return review;
   } catch (error) {
-    console.log(error, "Failed to delete review");
+    console.error("Failed to delete review");
     throw error;
   }
 };
@@ -92,7 +92,7 @@ const getAllReviews = async () => {
 
     return rows;
   } catch (error) {
-    console.log("error getting reviews");
+    console.error("error getting reviews");
     throw error;
   }
 };
@@ -112,7 +112,7 @@ const getReviewByProductId = async (id) => {
     console.log("finished getting review by product id", rows);
     return rows;
   } catch (error) {
-    console.log("error getting review by product id");
+    console.error("error getting review by product id");
     throw error;
   }
 };

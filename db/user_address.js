@@ -16,7 +16,7 @@ const createUserAddress = async ({ name, address, city, state, userId }) => {
     console.log("Finished creating user address", userAddress);
     return userAddress;
   } catch (error) {
-    console.error("error creating user address");
+    console.error("Error creating user address");
     throw error;
   }
 };
@@ -44,7 +44,7 @@ const editUserAddress = async (userId, fields = {}) => {
     console.log("Finished editing user address", address);
     return address;
   } catch (error) {
-    console.error("error editing user address");
+    console.error("Error editing user address");
     throw error;
   }
 };
@@ -64,7 +64,7 @@ const deleteUserAddress = async (userId) => {
     console.log("Finished deleting user address", address);
     return address;
   } catch (error) {
-    console.error("error deleting user");
+    console.error("Error deleting user");
     throw error;
   }
 };
@@ -84,7 +84,8 @@ const getAddressByUser = async (id) => {
     console.log("Finished getting user address", address);
     return address;
   } catch (error) {
-    console.error("error getting user address");
+    console.error("Error getting user address");
+    throw error;
   }
 };
 

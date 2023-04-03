@@ -116,7 +116,8 @@ const getUser = async ({ email, password }) => {
       return user;
     }
   } catch (error) {
-    throw { error };
+    console.error("Error getting User");
+    throw error;
   }
 };
 
@@ -129,7 +130,7 @@ const getAllUsers = async () => {
     console.log("Finished getting all users!", rows);
     return rows;
   } catch (error) {
-    console.error("error getting all users");
+    console.error("Error getting all users");
     throw error;
   }
 };
@@ -160,6 +161,7 @@ const deleteUser = async (id) => {
     console.log("Finished deleting user", user);
     return user;
   } catch (error) {
+    console.error("Error deleting User");
     throw error;
   }
 };
