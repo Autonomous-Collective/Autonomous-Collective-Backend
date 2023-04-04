@@ -6,7 +6,10 @@ const {
     getProductsByTagId,
     getProductsByAuthor,
     getReviewsByProductId,
+    getProductByTitle,
+    createReview,
 } = require("../db");
+const { requireUser, requireAdmin } = require("./utils");
 
 //GET all products
 productsRouter.get("/", async (req, res, next) => {
@@ -100,8 +103,49 @@ productsRouter.get("/reviews/:productId", async (req, res, next) => {
     }
 });
 
+//GET product by title:
+productsRouter.get("/title/:title", async(req, res, next) => {
+    const { title } = req.params;
+    console.log(title, "title");
+    try{
+        const product = await getProductByTitle(title);
+        if(!product){
+            res.status(255);
+            next({
+                name: "ProductDoesntExistError",
+                message: "A product by that name may not exist",
+            })
+        }else{
+            res.send(product);
+        }
+    }catch(error){
+       next(error); 
+    }
+})
+
 //POST user create a review on specific product
-productsRouter.post("")
+productsRouter.post("/:productId/reviews", requireUser, async(req, res, next) => {
+    const productId = Number(req.params.productId);
+    const userId = req.user.id;
+    const { score, title, content } = req.body;
+
+    try{
+        
+        const review = await createReview({score: score, title: title, content: content, reviewerId: userId, productId: productId});
+
+        if(!review.id){
+            res.status(255);
+            next({
+                name: "ReviewPostNotSuccessfulError",
+                message: "Your review was not successfully posted",
+            });
+        }else{
+            res.send(review);
+        }
+    }catch(error){
+        next(error);
+    }
+})
 
 
 
