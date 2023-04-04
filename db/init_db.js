@@ -118,7 +118,7 @@ const createTables = async () => {
       description varchar(255) NOT NULL,
       price INTEGER NOT NULL,
       img varchar(255),
-      quantity INTEGER NOT NULL,
+      inventory INTEGER NOT NULL,
       "isActive" BOOLEAN DEFAULT true
     );
     CREATE TABLE tags(
@@ -176,10 +176,9 @@ const createTables = async () => {
 const createInitialUsers = async () => {
   console.log("Starting to Create Users");
   try {
-    const users = usersToAdd.map(createUser);
-    const resolvedUsers = await Promise.all(users);
-    console.log("finished creating users");
-    return resolvedUsers;
+    for (let i = 0; i < usersToAdd.length; i++) {
+      await createUser(usersToAdd[i]);
+    }
   } catch (error) {
     console.error("error creating users");
     throw error;
@@ -265,7 +264,7 @@ async function rebuildDB() {
     // user address functions
     await getAddressByUser(1);
     await editUserAddress(1, { name: "Jimbo" });
-    await deleteUserAddress(1);
+    await deleteUserAddress(2);
 
     // //product funcs
     await editProduct(3, { title: "edited title" });

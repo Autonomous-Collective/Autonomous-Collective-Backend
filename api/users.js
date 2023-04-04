@@ -1,6 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { getUserByEmail, createUser, getAllUsers } = require("../db/users");
+
 const usersRouter = express.Router();
 const bcrypt = require("bcrypt");
 const { requireUser, requireAdmin } = require("./utils");
@@ -10,6 +10,11 @@ const {
   createUserCart,
   updateProductAmountInCart,
   addProductToCart,
+  getAddressByUser,
+  getUserByEmail,
+  createUser,
+  getAllUsers,
+  getUserById,
 } = require("../db");
 
 //user routes will go here
@@ -222,5 +227,33 @@ usersRouter.post(
     }
   }
 );
+
+usersRouter.get("/me", requireUser, async (req, res, next) => {
+  const userId = req.user.id;
+
+  console.log(req.user, "req.user");
+
+  try {
+    const user = await getUserById(userId);
+    console.log(userId, "8888");
+
+    const address = await getAddressByUser(userId);
+
+    console.log("Address", address);
+
+    user.address = address;
+    console.log(user, "****");
+
+    res.send({
+      success: true,
+      user: user,
+    });
+  } catch ({ name, message }) {
+    next({
+      name: "ErrorGettingUser",
+      message: "Error getting user info",
+    });
+  }
+});
 
 module.exports = usersRouter;

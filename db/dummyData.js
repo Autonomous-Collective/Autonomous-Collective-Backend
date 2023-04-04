@@ -4,7 +4,7 @@ const usersToAdd = [
     name: "Stephen",
     email: "TheKing@mymail.com",
     password: "password",
-    isAdmin: true,
+    isAdmin: false,
     isGuest: false,
   },
   {
@@ -17,7 +17,14 @@ const usersToAdd = [
   {
     name: "Victor",
     email: "youngandrestless@mymail.com",
-    password: "passwordl",
+    password: "password",
+    isAdmin: false,
+    isGuest: false,
+  },
+  {
+    name: "Barbara",
+    email: "barbarian@mymail.com",
+    password: "password",
     isAdmin: false,
     isGuest: false,
   },
@@ -47,13 +54,6 @@ const usersToAdd = [
     email: "parker.josie.eden@gmail.com",
     password: "password",
     isAdmin: true,
-    isGuest: false,
-  },
-  {
-    name: "Barbara",
-    email: "barbarian@mymail.com",
-    password: "password",
-    isAdmin: false,
     isGuest: false,
   },
 ];
@@ -303,11 +303,6 @@ const userCartsToAdd = [
 const cartProductsToAdd = [
   {
     productId: 1,
-    cartId: 1,
-    quantity: 1,
-  },
-  {
-    productId: 2,
     cartId: 1,
     quantity: 1,
   },
