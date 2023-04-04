@@ -57,8 +57,27 @@ const getTagsByProduct = async (productId) => {
   }
 };
 
+
+const removeTagFromProduct = async(tagId, productId) => {
+  try{
+    console.log("starting to delete product_tag")
+    const { rows: [product_tag] } = await client.query(`
+    DELETE FROM product_tags
+    WHERE "tagId" = $1 AND "productId" = $2
+    RETURNING *;
+    `, [tagId, productId]);
+    
+    console.log("finished deleting product_tag", product_tag);
+    return product_tag;
+  }catch(error){
+    console.error("Error deleting tag from product");
+    throw error;
+  }
+}
+
 module.exports = {
   addTagsToProduct,
   createProductTag,
   getTagsByProduct,
+  removeTagFromProduct,
 };

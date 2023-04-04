@@ -132,8 +132,20 @@ const getProductsByAuthor = async (author) => {
         `,
       [author]
     );
-    console.log("Finished getting product by author", rows);
-    return rows;
+
+    const updatedProducts = rows.map(async (product) => {
+      const tagIdList = await getTagsByProduct(product.id);
+      const tags = tagIdList.map((e) => {
+        return e.name;
+      });
+      const thePromises = await Promise.all(tags);
+      product.tags = thePromises;
+      return product;
+    });
+    const awaitedProducts = await Promise.all(updatedProducts);
+
+    console.log("finished getting product by author", awaitedProducts);
+   return awaitedProducts;
   } catch (error) {
     console.error("Error getting product by author");
     throw error;

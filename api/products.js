@@ -17,8 +17,10 @@ const {
     getAllTags,
     createTags,
     getTagByName,
-    addTagsToProduct
-
+    addTagsToProduct,
+    getTagById,
+    deleteTag,
+    removeTagFromProduct,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -408,6 +410,30 @@ productsRouter.post("/:productId/addtag", requireAdmin, async(req, res, next) =>
       const newProductTag = await addTagsToProduct(productId, tagIdList);
       res.send({newProductTag: newProductTag, success: true});
     }
+  }catch(error){
+    next(error);
+  }
+})
+
+//DELETE tags by tag id:
+productsRouter.delete("/tags/:productId/:tagId", requireAdmin,  async(req, res, next) => {
+
+  const { productId, tagId } = req.params;
+
+  try{
+    const checkIfExists = await getTagById(tagId);
+
+    if(!checkIfExists){
+      res.status(400);
+      next({
+        name: "TagDoesNotExistError",
+        message: "This tag may not exist"
+      });
+    }else{
+      const deletedTag = await removeTagFromProduct(tagId, productId);
+      res.send({ deletedTag: deletedTag, success: true });
+    }
+
   }catch(error){
     next(error);
   }
