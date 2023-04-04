@@ -114,7 +114,7 @@ usersRouter.post("/login", async (req, res, next) => {
 
 // GET /api/users/:userId/cart
 
-usersRouter.get("/:userId/cart", async (req, res, next) => {
+usersRouter.get("/:userId/cart", requireUser, async (req, res, next) => {
   try {
     const { userId } = req.params;
     console.log("this is cartId", userId);

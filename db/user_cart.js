@@ -84,7 +84,6 @@ const getAllUserCartsByCartOwnerId = async (cartOwnerId) => {
 
     const newRows = rows.map(async (row) => {
       const products = await getProductsByCart(row.id);
-      console.log(products, "****");
       row.products = products;
       return row;
     });
