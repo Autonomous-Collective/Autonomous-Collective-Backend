@@ -15,6 +15,9 @@ const {
   createUser,
   getAllUsers,
   getUserById,
+  editUserAddress,
+  updateUser,
+  deleteUser,
 } = require("../db");
 
 //user routes will go here
@@ -231,18 +234,12 @@ usersRouter.post(
 usersRouter.get("/me", requireUser, async (req, res, next) => {
   const userId = req.user.id;
 
-  console.log(req.user, "req.user");
-
   try {
     const user = await getUserById(userId);
-    console.log(userId, "8888");
 
     const address = await getAddressByUser(userId);
 
-    console.log("Address", address);
-
     user.address = address;
-    console.log(user, "****");
 
     res.send({
       success: true,
@@ -252,6 +249,97 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
     next({
       name: "ErrorGettingUser",
       message: "Error getting user info",
+    });
+  }
+});
+
+usersRouter.patch("/me/edit-address", requireUser, async (req, res, next) => {
+  const userId = req.user.id;
+  const { name, address, city, state } = req.body;
+
+  const fields = {};
+
+  if (name) {
+    fields.name = name;
+  }
+  if (address) {
+    fields.address = address;
+  }
+  if (city) {
+    fields.city = city;
+  }
+  if (state) {
+    fields.state = state;
+  }
+
+  try {
+    const user = await getUserById(userId);
+
+    const address = await editUserAddress(userId, fields);
+
+    user.address = address;
+
+    res.send({
+      success: true,
+      user: user,
+    });
+  } catch ({ name, message }) {
+    next({
+      name: "ErrorUpdatingUser",
+      message: "Error updating user address",
+    });
+  }
+});
+
+usersRouter.patch("/me/edit-info", requireUser, async (req, res, next) => {
+  const userId = req.user.id;
+  const { name, password, email } = req.body;
+
+  const fields = {};
+
+  if (name) {
+    fields.name = name;
+  }
+  if (email) {
+    fields.email = email;
+  }
+  if (password) {
+    fields.password = password;
+  }
+
+  try {
+    const user = await updateUser(userId, fields);
+
+    const address = await getAddressByUser(userId);
+
+    user.address = address;
+
+    res.send({
+      success: true,
+      user: user,
+    });
+  } catch ({ name, message }) {
+    next({
+      name: "ErrorUpdatingUser",
+      message: "Error updating user info",
+    });
+  }
+});
+
+usersRouter.patch("/me/delete", requireUser, async (req, res, next) => {
+  const userId = req.user.id;
+  console.log(req.user, "req.user");
+
+  try {
+    const deletedUser = await deleteUser(userId);
+    res.send({
+      success: true,
+      deletedUser: deletedUser,
+    });
+  } catch (error) {
+    next({
+      name: "ErrorDeletingUser",
+      message: "There was an error deleting this user",
     });
   }
 });
