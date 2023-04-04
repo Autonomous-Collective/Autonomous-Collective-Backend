@@ -176,9 +176,10 @@ const createTables = async () => {
 const createInitialUsers = async () => {
   console.log("Starting to Create Users");
   try {
-    const users = await Promise.all(usersToAdd.map(createUser));
+    const users = usersToAdd.map(createUser);
+    const resolvedUsers = Promise.all(users);
     console.log("finished creating users");
-    return users;
+    return resolvedUsers;
   } catch (error) {
     console.error("error creating users");
     throw error;
