@@ -1,13 +1,15 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { getUserByEmail, createUser } = require("../db/users");
+const { getUserByEmail, createUser, getAllUsers } = require("../db/users");
 const usersRouter = express.Router();
 const bcrypt = require("bcrypt");
-const { requireUser } = require("./utils");
+const { requireUser, requireAdmin } = require("./utils");
 const {
   getUserCartByCartOwnerId,
   getAllUserCartsByCartOwnerId,
   createUserCart,
+  updateProductAmountInCart,
+  addProductToCart,
 } = require("../db");
 
 //user routes will go here
@@ -135,5 +137,90 @@ usersRouter.get("/:userId/cart", requireUser, async (req, res, next) => {
     });
   }
 });
+
+// GET /api/users/:userId/orders
+
+usersRouter.get("/:userId/orders", requireUser, async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+
+    const userOrders = await getAllUserCartsByCartOwnerId(userId);
+
+    if (userOrders.length) res.send({ userOrders: userOrders, success: true });
+    else {
+      next({
+        name: "No orders found",
+        message: "No orders found for this user",
+      });
+    }
+  } catch ({ name, message }) {
+    next({
+      name: "Error getting orders",
+      message: "Something happened while getting orders",
+    });
+  }
+});
+
+// GET /api/users/all (for admin)
+
+usersRouter.get("/all", requireAdmin, async (req, res, next) => {
+  try {
+    const allUsers = await getAllUsers();
+    res.send({ allUsers: allUsers, success: true });
+  } catch ({ name, message }) {
+    next({
+      name: "Error getting all users",
+      message: "Something happened while getting all users",
+    });
+  }
+});
+
+// PATCH /api/users/:userId/cart/update product/:productId
+
+usersRouter.patch(
+  "/:userId/cart/update-product/:productId",
+  requireUser,
+  async (req, res, next) => {
+    const { userId, productId } = req.params;
+    const { quantity } = req.body;
+
+    try {
+      const cart = await getUserCartByCartOwnerId(userId);
+      const updatedCart = await updateProductAmountInCart(
+        cart.id,
+        productId,
+        quantity
+      );
+      res.send({ updatedCart: updatedCart, success: true });
+    } catch ({ name, message }) {
+      next({
+        name: "Error updating user's cart",
+        message: "Something happened while updating user's cart",
+      });
+    }
+  }
+);
+
+// POST /api/users/:userId/cart/add-product/:productId
+
+usersRouter.post(
+  "/:userId/cart/add-product/:productId",
+  requireUser,
+  async (req, res, next) => {
+    const { userId, productId } = req.params;
+    const { quantity } = req.body;
+
+    try {
+      const cart = await getUserCartByCartOwnerId(userId);
+      const updatedCart = await addProductToCart(cart.id, productId, quantity);
+      res.send({ updatedCart: updatedCart, success: true });
+    } catch ({ name, message }) {
+      next({
+        name: "Error updating user's cart",
+        message: "Error adding product to user's cart",
+      });
+    }
+  }
+);
 
 module.exports = usersRouter;
