@@ -177,7 +177,7 @@ const createInitialUsers = async () => {
   console.log("Starting to Create Users");
   try {
     const users = usersToAdd.map(createUser);
-    const resolvedUsers = Promise.all(users);
+    const resolvedUsers = await Promise.all(users);
     console.log("finished creating users");
     return resolvedUsers;
   } catch (error) {
