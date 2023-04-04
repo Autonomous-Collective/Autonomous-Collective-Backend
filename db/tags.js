@@ -59,6 +59,22 @@ const getTagById = async (id) => {
   }
 };
 
+const getTagByName = async (name) => {
+  try{
+    console.log("Starting to get tag by name");
+    const{rows:[tag]} = await client.query(`
+      SELECT *
+      FROM tags
+      WHERE name = $1
+    `, [name]);
+    console.log("finished getting tag by name", tag);
+    return tag;
+  } catch(error) {
+    console.error("failed to get tags by name");
+    throw error;
+  }
+}
+
 const deleteTag = async (id) => {
   try {
     console.log("Starting to delete tag", id);
@@ -84,5 +100,6 @@ module.exports = {
   createTags,
   getAllTags,
   getTagById,
+  getTagByName,
   deleteTag,
 };

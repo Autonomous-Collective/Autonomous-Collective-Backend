@@ -13,7 +13,11 @@ const {
     getReviewById,
     editProduct,
     deleteProduct,
-    deleteReview
+    deleteReview,
+    getAllTags,
+    createTags,
+    getTagByName,
+    addTagsToProduct
 
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
@@ -34,6 +38,24 @@ productsRouter.get("/", async (req, res, next) => {
     next(error);
   }
 });
+
+// GET all tags
+productsRouter.get("/tags", async(req, res, next) => {
+  try{
+    const tags = await getAllTags();
+    if(!tags.length){
+      res.status(400);
+      next({
+        name: "GetAllTagsError",
+        message: "Error getting all tags"
+      });
+    } else {
+      res.send({tags:tags, success: true});
+    }
+  }catch(error){
+    next(error);
+  }
+})
 
 //GET product by ID
 productsRouter.get("/:productId", async (req, res, next) => {
@@ -343,6 +365,52 @@ productsRouter.delete("/:reviewId", requireUser, async(req, res, next) => {
     }catch(error){
         next(error)
     }
+});
+
+//POST tag to database
+productsRouter.post("/tags", requireAdmin, async(req, res, next) => {
+  const { name } = req.body;
+
+  try{
+    const checkIfExists = await getTagByName(name);
+    if(checkIfExists){
+      res.status(400);
+      next({
+        name: "TagExistsError",
+        message: "A tag with this name may already exist"
+      });
+    } else {
+      const newTag = await createTags({name: name});
+      res.send({newTag: newTag, success: true});
+    }
+  } catch(error){
+    next(error);
+  }
+});
+
+//POST tag to product
+
+productsRouter.post("/:productId/addtag", requireAdmin, async(req, res, next) => {
+  const {name} = req.body;
+  const {productId} = req.params;
+  try{
+    const findTag = await getTagByName(name);
+    if(!findTag){
+      res.status(400);
+      next({
+        name: "TagNotFoundError",
+        message: "A tag with this name may not exist"
+      });
+    }else{
+      const tagIdList = []
+      const tagId = findTag.id;
+      tagIdList.push(tagId);
+      const newProductTag = await addTagsToProduct(productId, tagIdList);
+      res.send({newProductTag: newProductTag, success: true});
+    }
+  }catch(error){
+    next(error);
+  }
 })
 
 module.exports = productsRouter;
