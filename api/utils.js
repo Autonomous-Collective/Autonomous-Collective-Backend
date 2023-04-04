@@ -20,6 +20,8 @@ const requireAdmin = (req, res, next) => {
       message: "You must be an admin to perform this action",
     });
   }
+
+  next();
 };
 
 module.exports = {
