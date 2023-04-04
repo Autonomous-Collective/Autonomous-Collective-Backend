@@ -343,5 +343,22 @@ usersRouter.patch("/me/delete", requireUser, async (req, res, next) => {
     });
   }
 });
+usersRouter.patch("/delete/:userId", requireAdmin, async (req, res, next) => {
+  const { userId } = req.params;
+  console.log(req.user, "req.user");
+
+  try {
+    const deletedUser = await deleteUser(userId);
+    res.send({
+      success: true,
+      deletedUser: deletedUser,
+    });
+  } catch (error) {
+    next({
+      name: "ErrorDeletingUser",
+      message: "There was an error deleting this user",
+    });
+  }
+});
 
 module.exports = usersRouter;
