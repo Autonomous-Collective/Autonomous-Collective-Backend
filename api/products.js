@@ -189,7 +189,7 @@ productsRouter.post(
 
 //POST products (req. admin)
 productsRouter.post("/", requireAdmin, async (req, res, next) => {
-  const { title, author, isbn, description, price, imageUrl, quantity } =
+  const { title, author, isbn, description, price, imageUrl, inventory } =
     req.body;
 
   try {
@@ -200,7 +200,7 @@ productsRouter.post("/", requireAdmin, async (req, res, next) => {
       description: description,
       price: price,
       imageUrl: imageUrl,
-      quantity: quantity,
+      inventory: inventory,
     });
     if (!product) {
       res.status(400);
@@ -257,7 +257,7 @@ productsRouter.patch(
 //PATCH product by product id, requires admin:
 productsRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
   const { productId } = req.params;
-  const { title, author, isbn, description, price, imageUrl, quantity } =
+  const { title, author, isbn, description, price, imageUrl, inventory } =
     req.body;
 
   const fields = {};
@@ -280,8 +280,8 @@ productsRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
   if (imageUrl) {
     fields.imageUrl = imageUrl;
   }
-  if (quantity) {
-    fields.quantity = quantity;
+  if (inventory) {
+    fields.inventory = inventory;
   }
 
   try {

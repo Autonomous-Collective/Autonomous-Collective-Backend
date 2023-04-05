@@ -8,7 +8,7 @@ const createProduct = async ({
   description,
   price,
   imageUrl,
-  quantity,
+  inventory,
 }) => {
   try {
     const {
@@ -20,7 +20,7 @@ const createProduct = async ({
             ON CONFLICT (title) DO NOTHING
             RETURNING *
         `,
-      [title, author, isbn, description, price, imageUrl, quantity]
+      [title, author, isbn, description, price, imageUrl, inventory]
     );
     console.log("Finished creating product", product);
     return product;
