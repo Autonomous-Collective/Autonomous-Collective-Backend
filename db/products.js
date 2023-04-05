@@ -96,6 +96,14 @@ const getProductByTitle = async (title) => {
         `,
       [title]
     );
+
+    const tagIdList = await getTagsByProduct(product.id);
+    const tags = tagIdList.map((e) => {
+      return e.name;
+    });
+    const thePromises = await Promise.all(tags);
+    product.tags = thePromises;
+
     console.log("Finished getting product by Title", product);
     return product;
   } catch (error) {
@@ -115,6 +123,14 @@ const getProductById = async (id) => {
         `,
       [id]
     );
+
+    const tagIdList = await getTagsByProduct(product.id);
+    const tags = tagIdList.map((e) => {
+      return e.name;
+    });
+    const thePromises = await Promise.all(tags);
+    product.tags = thePromises;
+
     console.log("Finished getting product by Id", product);
     return product;
   } catch (error) {
@@ -145,7 +161,7 @@ const getProductsByAuthor = async (author) => {
     const awaitedProducts = await Promise.all(updatedProducts);
 
     console.log("finished getting product by author", awaitedProducts);
-   return awaitedProducts;
+    return awaitedProducts;
   } catch (error) {
     console.error("Error getting product by author");
     throw error;
