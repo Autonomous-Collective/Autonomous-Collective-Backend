@@ -21,6 +21,7 @@ const {
   getTagById,
   deleteTag,
   removeTagFromProduct,
+  getUserById,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -121,6 +122,7 @@ productsRouter.get("/reviews/:productId", async (req, res, next) => {
   const productId = req.params.productId;
   try {
     const reviews = await getReviewsByProductId(productId);
+
     if (!reviews.length) {
       res.status(255);
       next({

@@ -102,8 +102,9 @@ const getReviewsByProductId = async (id) => {
     console.log("started getting review by product id", id);
     const { rows } = await client.query(
       `
-            SELECT *
+            SELECT reviews.*, users.name
             FROM reviews
+            JOIN users ON users.id = reviews."reviewerId"
             WHERE "productId" = $1;
         `,
       [id]
@@ -118,20 +119,25 @@ const getReviewsByProductId = async (id) => {
 };
 
 const getReviewById = async (id) => {
-  try{
+  try {
     console.log("starting to get review by id");
-    const{ rows: [review] } = await client.query(`
+    const {
+      rows: [review],
+    } = await client.query(
+      `
       SELECT *
       FROM reviews
       WHERE id = $1
-    `, [id]);
+    `,
+      [id]
+    );
     console.log("finished getting review by id", review);
     return review;
   } catch (error) {
     console.error("error getting review by id");
     throw error;
   }
-}
+};
 
 module.exports = {
   createReview: createReview,
