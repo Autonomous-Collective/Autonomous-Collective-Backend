@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-
 const usersRouter = express.Router();
 const bcrypt = require("bcrypt");
 const { requireUser, requireAdmin } = require("./utils");
@@ -68,6 +67,8 @@ usersRouter.post("/register", async (req, res, next) => {
           expiresIn: "1w",
         });
 
+        delete user.password;
+
         res.send({
           message: "Thanks for signing up!",
           token,
@@ -104,7 +105,10 @@ usersRouter.post("/login", async (req, res, next) => {
 
     if (user && isValid) {
       const token = jwt.sign({ id: user.id, email }, process.env.JWT_SECRET);
-      res.send({ message: "You're logged in!", token, success: true });
+
+      delete user.password;
+
+      res.send({ message: "You're logged in!", token, user, success: true });
     } else {
       res.status(401);
       next({
@@ -127,7 +131,6 @@ usersRouter.post("/login", async (req, res, next) => {
 usersRouter.get("/:userId/cart", requireUser, async (req, res, next) => {
   try {
     const { userId } = req.params;
-    console.log("this is cartId", userId);
     const cart = await getUserCartByCartOwnerId(userId);
 
     if (cart) res.send({ cart: cart, success: true });

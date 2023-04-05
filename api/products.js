@@ -1,26 +1,26 @@
 const express = require("express");
 const productsRouter = express.Router();
 const {
-    getAllProducts,
-    getProductById,
-    getProductsByTagId,
-    getProductsByAuthor,
-    getReviewsByProductId,
-    getProductByTitle,
-    createReview,
-    createProduct,
-    editReview,
-    getReviewById,
-    editProduct,
-    deleteProduct,
-    deleteReview,
-    getAllTags,
-    createTags,
-    getTagByName,
-    addTagsToProduct,
-    getTagById,
-    deleteTag,
-    removeTagFromProduct,
+  getAllProducts,
+  getProductById,
+  getProductsByTagId,
+  getProductsByAuthor,
+  getReviewsByProductId,
+  getProductByTitle,
+  createReview,
+  createProduct,
+  editReview,
+  getReviewById,
+  editProduct,
+  deleteProduct,
+  deleteReview,
+  getAllTags,
+  createTags,
+  getTagByName,
+  addTagsToProduct,
+  getTagById,
+  deleteTag,
+  removeTagFromProduct,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -42,22 +42,22 @@ productsRouter.get("/", async (req, res, next) => {
 });
 
 // GET all tags
-productsRouter.get("/tags", async(req, res, next) => {
-  try{
+productsRouter.get("/tags", async (req, res, next) => {
+  try {
     const tags = await getAllTags();
-    if(!tags.length){
+    if (!tags.length) {
       res.status(400);
       next({
         name: "GetAllTagsError",
-        message: "Error getting all tags"
+        message: "Error getting all tags",
       });
     } else {
-      res.send({tags:tags, success: true});
+      res.send({ tags: tags, success: true });
     }
-  }catch(error){
+  } catch (error) {
     next(error);
   }
-})
+});
 
 //GET product by ID
 productsRouter.get("/:productId", async (req, res, next) => {
@@ -138,7 +138,6 @@ productsRouter.get("/reviews/:productId", async (req, res, next) => {
 //GET product by title:
 productsRouter.get("/title/:title", async (req, res, next) => {
   const { title } = req.params;
-  console.log(title, "title");
   try {
     const product = await getProductByTitle(title);
     if (!product) {
@@ -192,16 +191,7 @@ productsRouter.post(
 productsRouter.post("/", requireAdmin, async (req, res, next) => {
   const { title, author, isbn, description, price, imageUrl, quantity } =
     req.body;
-  console.log(
-    title,
-    author,
-    isbn,
-    description,
-    price,
-    imageUrl,
-    quantity,
-    "req body !!!!"
-  );
+
   try {
     const product = await createProduct({
       title: title,
@@ -245,7 +235,6 @@ productsRouter.patch(
     if (content) {
       fields.content = content;
     }
-    console.log(fields, "these are the fields to update");
 
     try {
       const findReview = await getReviewById(reviewId);
@@ -266,177 +255,184 @@ productsRouter.patch(
 );
 
 //PATCH product by product id, requires admin:
-productsRouter.patch("/:productId", requireAdmin, async(req, res, next) => {
-    const { productId } = req.params;
-    const { title, author, isbn, description, price, imageUrl, quantity } = req.body;
+productsRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
+  const { productId } = req.params;
+  const { title, author, isbn, description, price, imageUrl, quantity } =
+    req.body;
 
-    const fields = {};
+  const fields = {};
 
-    if(title){
-        fields.title = title;
-    }
-    if(author){
-        fields.author = author;
-    }
-    if(isbn){
-        fields.isbn = isbn;
-    }
-    if(description){
-        fields.description = description;
-    }
-    if(price){
-        fields.price = price;
-    }
-    if(imageUrl){
-        fields.imageUrl = imageUrl;
-    }
-    if(quantity){
-        fields.quantity = quantity;
-    }
+  if (title) {
+    fields.title = title;
+  }
+  if (author) {
+    fields.author = author;
+  }
+  if (isbn) {
+    fields.isbn = isbn;
+  }
+  if (description) {
+    fields.description = description;
+  }
+  if (price) {
+    fields.price = price;
+  }
+  if (imageUrl) {
+    fields.imageUrl = imageUrl;
+  }
+  if (quantity) {
+    fields.quantity = quantity;
+  }
 
-    try{
-        const findProduct = await getProductById(productId);
+  try {
+    const findProduct = await getProductById(productId);
 
-        if(!findProduct){
-            res.status(403);
-            next({
-                name: "ProductMayNotExistError",
-                message: "A product by this id may not exist"
-            })
-        }else{
-            const updatedProduct = await editProduct(productId, fields);
-            res.send({updatedProduct: updatedProduct, success: true});
-        }
-
-    }catch(error){
-        next(error);
+    if (!findProduct) {
+      res.status(403);
+      next({
+        name: "ProductMayNotExistError",
+        message: "A product by this id may not exist",
+      });
+    } else {
+      const updatedProduct = await editProduct(productId, fields);
+      res.send({ updatedProduct: updatedProduct, success: true });
     }
-})
+  } catch (error) {
+    next(error);
+  }
+});
 
 //"DELETE"(ish) the product by product id
-productsRouter.patch("/:productId/delete", requireAdmin, async(req, res, next) => {
-
+productsRouter.patch(
+  "/:productId/delete",
+  requireAdmin,
+  async (req, res, next) => {
     const { productId } = req.params;
-    console.log(productId, "productId");
 
-    try{
-        
-        const findProduct = await getProductById(productId);
-        if(!findProduct || findProduct.isActive === false){
-            res.status(403);
-            next({
-                name: "ProductCannotBeDeletedError",
-                message: "This product either does not exist or has already been deleted"
-            });
-        }else{
-            const deletedProduct = await deleteProduct(productId);
-            res.send({ deletedProduct: deletedProduct, success: true })
-        }
-    }catch(error){
-        next(error);
-    }
-} )
-
-
-//DELETE review by review id:
-productsRouter.delete("/:reviewId", requireUser, async(req, res, next) => {
-    const { reviewId } = req.params;
-    //id here is user id, just pulled off user obj
-    const { id, isAdmin } = req.user;
-
-    try{
-    const findReview = await getReviewById(reviewId);
-    if(!findReview){
+    try {
+      const findProduct = await getProductById(productId);
+      if (!findProduct || findProduct.isActive === false) {
         res.status(403);
         next({
-            name: "ReviewDoesNotExistError",
-            message: "This review does not exist"
-        })
-    }else{
-        if(id === findReview.reviewerId || isAdmin){
-            const deletedReview = await deleteReview(reviewId);
-            res.send({deletedReview: deletedReview, success: true})
-        }else{
-            res.status(403);
-            next({
-                name: "UnauthorizedDeleteError",
-                message: "You are not authorized to perform this action"
-            });
-        }
+          name: "ProductCannotBeDeletedError",
+          message:
+            "This product either does not exist or has already been deleted",
+        });
+      } else {
+        const deletedProduct = await deleteProduct(productId);
+        res.send({ deletedProduct: deletedProduct, success: true });
+      }
+    } catch (error) {
+      next(error);
     }
-    }catch(error){
-        next(error)
+  }
+);
+
+//DELETE review by review id:
+productsRouter.delete("/:reviewId", requireUser, async (req, res, next) => {
+  const { reviewId } = req.params;
+  //id here is user id, just pulled off user obj
+  const { id, isAdmin } = req.user;
+
+  try {
+    const findReview = await getReviewById(reviewId);
+    if (!findReview) {
+      res.status(403);
+      next({
+        name: "ReviewDoesNotExistError",
+        message: "This review does not exist",
+      });
+    } else {
+      if (id === findReview.reviewerId || isAdmin) {
+        const deletedReview = await deleteReview(reviewId);
+        res.send({ deletedReview: deletedReview, success: true });
+      } else {
+        res.status(403);
+        next({
+          name: "UnauthorizedDeleteError",
+          message: "You are not authorized to perform this action",
+        });
+      }
     }
+  } catch (error) {
+    next(error);
+  }
 });
 
 //POST tag to database
-productsRouter.post("/tags", requireAdmin, async(req, res, next) => {
+productsRouter.post("/tags", requireAdmin, async (req, res, next) => {
   const { name } = req.body;
 
-  try{
+  try {
     const checkIfExists = await getTagByName(name);
-    if(checkIfExists){
+    if (checkIfExists) {
       res.status(400);
       next({
         name: "TagExistsError",
-        message: "A tag with this name may already exist"
+        message: "A tag with this name may already exist",
       });
     } else {
-      const newTag = await createTags({name: name});
-      res.send({newTag: newTag, success: true});
+      const newTag = await createTags({ name: name });
+      res.send({ newTag: newTag, success: true });
     }
-  } catch(error){
+  } catch (error) {
     next(error);
   }
 });
 
 //POST tag to product
 
-productsRouter.post("/:productId/addtag", requireAdmin, async(req, res, next) => {
-  const {name} = req.body;
-  const {productId} = req.params;
-  try{
-    const findTag = await getTagByName(name);
-    if(!findTag){
-      res.status(400);
-      next({
-        name: "TagNotFoundError",
-        message: "A tag with this name may not exist"
-      });
-    }else{
-      const tagIdList = []
-      const tagId = findTag.id;
-      tagIdList.push(tagId);
-      const newProductTag = await addTagsToProduct(productId, tagIdList);
-      res.send({newProductTag: newProductTag, success: true});
+productsRouter.post(
+  "/:productId/add-tag",
+  requireAdmin,
+  async (req, res, next) => {
+    const { name } = req.body;
+    const { productId } = req.params;
+    try {
+      const findTag = await getTagByName(name);
+      if (!findTag) {
+        res.status(400);
+        next({
+          name: "TagNotFoundError",
+          message: "A tag with this name may not exist",
+        });
+      } else {
+        const tagIdList = [];
+        const tagId = findTag.id;
+        tagIdList.push(tagId);
+        const newProductTag = await addTagsToProduct(productId, tagIdList);
+        res.send({ newProductTag: newProductTag, success: true });
+      }
+    } catch (error) {
+      next(error);
     }
-  }catch(error){
-    next(error);
   }
-})
+);
 
 //DELETE tags by tag id:
-productsRouter.delete("/tags/:productId/:tagId", requireAdmin,  async(req, res, next) => {
+productsRouter.delete(
+  "/tags/:productId/:tagId",
+  requireAdmin,
+  async (req, res, next) => {
+    const { productId, tagId } = req.params;
 
-  const { productId, tagId } = req.params;
+    try {
+      const checkIfExists = await getTagById(tagId);
 
-  try{
-    const checkIfExists = await getTagById(tagId);
-
-    if(!checkIfExists){
-      res.status(400);
-      next({
-        name: "TagDoesNotExistError",
-        message: "This tag may not exist"
-      });
-    }else{
-      const deletedTag = await removeTagFromProduct(tagId, productId);
-      res.send({ deletedTag: deletedTag, success: true });
+      if (!checkIfExists) {
+        res.status(400);
+        next({
+          name: "TagDoesNotExistError",
+          message: "This tag may not exist",
+        });
+      } else {
+        const deletedTag = await removeTagFromProduct(tagId, productId);
+        res.send({ deletedTag: deletedTag, success: true });
+      }
+    } catch (error) {
+      next(error);
     }
-
-  }catch(error){
-    next(error);
   }
-})
+);
 
 module.exports = productsRouter;
