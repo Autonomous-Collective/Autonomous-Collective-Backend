@@ -375,6 +375,7 @@ usersRouter.patch("/me/delete", requireUser, async (req, res, next) => {
     });
   }
 });
+
 usersRouter.patch("/delete/:userId", requireAdmin, async (req, res, next) => {
   const { userId } = req.params;
   console.log(req.user, "req.user");
@@ -389,6 +390,42 @@ usersRouter.patch("/delete/:userId", requireAdmin, async (req, res, next) => {
     next({
       name: "ErrorDeletingUser",
       message: "There was an error deleting this user",
+    });
+  }
+});
+
+//PATCH user admin:
+usersRouter.patch("/admin/edit-user/:userId", requireAdmin, async (req, res, next) => {
+  const userId = req.params.id;
+  const { name, password, email } = req.body;
+
+  const fields = {};
+
+  if (name) {
+    fields.name = name;
+  }
+  if (email) {
+    fields.email = email;
+  }
+  if (password) {
+    fields.password = password;
+  }
+
+  try {
+    const user = await updateUser(userId, fields);
+
+    const address = await getAddressByUser(userId);
+
+    user.address = address;
+
+    res.send({
+      success: true,
+      user: user,
+    });
+  } catch ({ name, message }) {
+    next({
+      name: "ErrorUpdatingUser",
+      message: "Error updating user info",
     });
   }
 });
