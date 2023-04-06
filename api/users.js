@@ -397,7 +397,7 @@ usersRouter.patch("/delete/:userId", requireAdmin, async (req, res, next) => {
 //PATCH user admin:
 usersRouter.patch("/admin/edit-user/:userId", requireAdmin, async (req, res, next) => {
   const userId = req.params.id;
-  const { name, password, email, isAdmin, isActive } = req.body;
+  const { name, email, isAdmin, isActive } = req.body;
 
   const fields = {};
 
@@ -406,9 +406,6 @@ usersRouter.patch("/admin/edit-user/:userId", requireAdmin, async (req, res, nex
   }
   if (email) {
     fields.email = email;
-  }
-  if (password) {
-    fields.password = password;
   }
   if(isAdmin || !isAdmin && isAdmin !== undefined){
     fields.isAdmin = isAdmin;
