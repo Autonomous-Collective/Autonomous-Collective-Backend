@@ -124,7 +124,7 @@ const getUser = async ({ email, password }) => {
 const getAllUsers = async () => {
   try {
     const { rows } = await client.query(`
-              SELECT id, email, "isAdmin", "isGuest", "isActive"
+              SELECT id, email, "isAdmin", "isGuest", "isActive", name
               FROM users
               `);
     console.log("Finished getting all users!", rows);
