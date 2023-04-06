@@ -13,6 +13,7 @@ const {
   getReviewById,
   editProduct,
   deleteProduct,
+  activateProduct,
   deleteReview,
   getAllTags,
   createTags,
@@ -323,6 +324,32 @@ productsRouter.patch(
       } else {
         const deletedProduct = await deleteProduct(productId);
         res.send({ deletedProduct: deletedProduct, success: true });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//restore deactivated product:
+productsRouter.patch(
+  "/:productId/restore",
+  requireAdmin,
+  async (req, res, next) => {
+    const { productId } = req.params;
+
+    try {
+      const findProduct = await getProductById(productId);
+      if (!findProduct || findProduct.isActive === true) {
+        res.status(403);
+        next({
+          name: "ProductCannotNeReactivated",
+          message:
+            "This product either does not exist or has already been reactivated",
+        });
+      } else {
+        const restoredProduct = await activateProduct(productId);
+        res.send({ restoredProduct: restoredProduct, success: true });
       }
     } catch (error) {
       next(error);

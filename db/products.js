@@ -221,6 +221,27 @@ const deleteProduct = async (id) => {
   }
 };
 
+const activateProduct = async(id) => {
+  try{
+    console.log("starting to reactivate the product");
+    const {
+      rows: [product],
+    } = await client.query(
+      `
+            UPDATE products
+            SET "isActive" = true
+            WHERE id = $1
+            RETURNING *;
+        `,
+      [id]
+    );
+    console.log("finished deleting product", product);
+    return product;
+  }catch(error){
+    throw error;
+  }
+}
+
 module.exports = {
   createProduct,
   editProduct,
@@ -230,4 +251,5 @@ module.exports = {
   getProductsByAuthor,
   getProductsByTagId,
   deleteProduct,
+  activateProduct,
 };
