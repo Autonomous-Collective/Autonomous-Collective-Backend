@@ -182,7 +182,7 @@ const createGuestUser = async () => {
             INSERT INTO users (name, email, password, "isGuest")
             VALUES ($1, $2, $3, $4)
             ON CONFLICT (email) DO NOTHING
-            RETURNING id, name, email, "isGuest";
+            RETURNING id, name, email, "isGuest", "isAdmin";
         `,
       [assignedName, assignedEmail, assignedPassword, true]
     );

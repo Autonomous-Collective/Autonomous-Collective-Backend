@@ -17,6 +17,7 @@ const {
   editUserAddress,
   updateUser,
   deleteUser,
+  createGuestUser
 } = require("../db");
 
 //user routes will go here
@@ -125,6 +126,34 @@ usersRouter.post("/login", async (req, res, next) => {
     });
   }
 });
+
+//POST /api/users/guest-login
+
+usersRouter.post("/guest-login", async (req, res, next) => {
+  try{
+    const guestUser = await createGuestUser();
+    
+    if(guestUser){
+      const token = jwt.sign({ id: guestUser.id, email: guestUser.email }, process.env.JWT_SECRET);
+      res.send({ message: "Guest user logged in!", guestUser, token, success: true });
+    } else {
+      res.status(401);
+      next({
+        name: "CreateGuestUserError",
+        message: "Error during create guest user",
+      });
+    }
+  }catch(error) {
+    console.error(error);
+    res.status(400);
+    next({
+      name: "GuestLoginError",
+      message: "Something went wrong during Guest Login",
+    });
+  }
+});
+
+
 
 // GET /api/users/:userId/cart
 
