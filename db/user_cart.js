@@ -54,14 +54,18 @@ const getUserCartByCartOwnerId = async (cartOwnerId) => {
     } = await client.query(
       `SELECT * 
         FROM user_carts
-        WHERE "cartOwnerId" = $1 AND "isOrdered" = false
+        WHERE "cartOwnerId" = $1 AND "isOrdered" = false;
         `,
       [cartOwnerId]
     );
 
-    const products = await getProductsByCart(userCart.id);
+    if (userCart) {
+      if (products) {
+        const products = await getProductsByCart(userCart.id);
+        userCart.products = products;
+      }
+    }
 
-    userCart.products = products;
     console.log("Finished getting user cart by Cart Owner Id", userCart);
 
     return userCart;
