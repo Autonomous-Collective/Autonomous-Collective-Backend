@@ -396,8 +396,9 @@ usersRouter.patch("/delete/:userId", requireAdmin, async (req, res, next) => {
 
 //PATCH user admin:
 usersRouter.patch("/admin/edit-user/:userId", requireAdmin, async (req, res, next) => {
-  const userId = req.params.id;
+  const userId = req.params.userId;
   const { name, email, isAdmin, isActive } = req.body;
+  console.log(userId, req.body, "user id and req body in api for edit user admin");
 
   const fields = {};
 
