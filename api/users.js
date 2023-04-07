@@ -17,7 +17,9 @@ const {
   editUserAddress,
   updateUser,
   deleteUser,
-  createGuestUser
+  createGuestUser,
+  checkoutUserCart,
+  getUserCartById,
 } = require("../db");
 
 //user routes will go here
@@ -130,12 +132,20 @@ usersRouter.post("/login", async (req, res, next) => {
 //POST /api/users/guest-login
 
 usersRouter.post("/guest-login", async (req, res, next) => {
-  try{
+  try {
     const guestUser = await createGuestUser();
-    
-    if(guestUser){
-      const token = jwt.sign({ id: guestUser.id, email: guestUser.email }, process.env.JWT_SECRET);
-      res.send({ message: "Guest user logged in!", guestUser, token, success: true });
+
+    if (guestUser) {
+      const token = jwt.sign(
+        { id: guestUser.id, email: guestUser.email },
+        process.env.JWT_SECRET
+      );
+      res.send({
+        message: "Guest user logged in!",
+        guestUser,
+        token,
+        success: true,
+      });
     } else {
       res.status(401);
       next({
@@ -143,7 +153,7 @@ usersRouter.post("/guest-login", async (req, res, next) => {
         message: "Error during create guest user",
       });
     }
-  }catch(error) {
+  } catch (error) {
     console.error(error);
     res.status(400);
     next({
@@ -152,8 +162,6 @@ usersRouter.post("/guest-login", async (req, res, next) => {
     });
   }
 });
-
-
 
 // GET /api/users/:userId/cart
 
@@ -223,7 +231,7 @@ usersRouter.patch(
   async (req, res, next) => {
     const { userId, productId } = req.params;
     const { quantity } = req.body;
-    
+
     try {
       const cart = await getUserCartByCartOwnerId(userId);
       const updatedCart = await updateProductAmountInCart(
@@ -395,41 +403,68 @@ usersRouter.patch("/delete/:userId", requireAdmin, async (req, res, next) => {
 });
 
 //PATCH user admin:
-usersRouter.patch("/admin/edit-user/:userId", requireAdmin, async (req, res, next) => {
-  const userId = req.params.userId;
-  const { name, email, isAdmin, isActive } = req.body;
-  console.log(userId, req.body, "user id and req body in api for edit user admin");
+usersRouter.patch(
+  "/admin/edit-user/:userId",
+  requireAdmin,
+  async (req, res, next) => {
+    const userId = req.params.userId;
+    const { name, email, isAdmin, isActive } = req.body;
+    console.log(
+      userId,
+      req.body,
+      "user id and req body in api for edit user admin"
+    );
 
-  const fields = {};
+    const fields = {};
 
-  if (name) {
-    fields.name = name;
+    if (name) {
+      fields.name = name;
+    }
+    if (email) {
+      fields.email = email;
+    }
+    if (isAdmin || (!isAdmin && isAdmin !== undefined)) {
+      fields.isAdmin = isAdmin;
+    }
+    if (isActive || (!isActive && isActive !== undefined)) {
+      fields.isActive = isActive;
+    }
+
+    try {
+      const user = await updateUser(userId, fields);
+
+      // const address = await getAddressByUser(userId);
+
+      // user.address = address;
+
+      res.send({
+        success: true,
+        user: user,
+      });
+    } catch ({ name, message }) {
+      next({
+        name: "ErrorUpdatingUser",
+        message: "Error updating user info",
+      });
+    }
   }
-  if (email) {
-    fields.email = email;
-  }
-  if(isAdmin || !isAdmin && isAdmin !== undefined){
-    fields.isAdmin = isAdmin;
-  }
-  if(isActive || !isActive && isActive !== undefined){
-    fields.isActive = isActive;
-  }
+);
+
+usersRouter.patch("/cart/checkout", requireUser, async (req, res, next) => {
+  const { id } = req.user;
 
   try {
-    const user = await updateUser(userId, fields);
-
-    // const address = await getAddressByUser(userId);
-
-    // user.address = address;
+    const cart = await getUserCartByCartOwnerId(id);
+    const checkedOutCart = await checkoutUserCart(cart.id);
 
     res.send({
       success: true,
-      user: user,
+      checkedOutCart: checkedOutCart,
     });
-  } catch ({ name, message }) {
+  } catch (error) {
     next({
-      name: "ErrorUpdatingUser",
-      message: "Error updating user info",
+      name: "ErrorCheckingOutCart",
+      message: "Something happened while checking out cart",
     });
   }
 });
