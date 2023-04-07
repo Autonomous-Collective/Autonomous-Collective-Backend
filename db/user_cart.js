@@ -58,10 +58,10 @@ const getUserCartByCartOwnerId = async (cartOwnerId) => {
         `,
       [cartOwnerId]
     );
+    const products = await getProductsByCart(userCart?.id);
 
     if (userCart) {
       if (products) {
-        const products = await getProductsByCart(userCart.id);
         userCart.products = products;
       }
     }
