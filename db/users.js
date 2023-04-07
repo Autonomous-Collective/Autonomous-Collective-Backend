@@ -80,7 +80,7 @@ const getUserById = async (userId) => {
     const {
       rows: [user],
     } = await client.query(
-      `SELECT id, email, "isAdmin", "isGuest"
+      `SELECT id, email, "isAdmin", "isGuest", name
           FROM users
           WHERE id = $1`,
       [userId]
