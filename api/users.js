@@ -223,7 +223,7 @@ usersRouter.patch(
   async (req, res, next) => {
     const { userId, productId } = req.params;
     const { quantity } = req.body;
-
+    
     try {
       const cart = await getUserCartByCartOwnerId(userId);
       const updatedCart = await updateProductAmountInCart(
