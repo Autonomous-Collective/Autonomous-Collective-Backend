@@ -14,12 +14,18 @@ const {
   createUser,
   getAllUsers,
   getUserById,
+  createUserAddress,
   editUserAddress,
   updateUser,
   deleteUser,
+
   createGuestUser,
   checkoutUserCart,
   getUserCartById,
+
+
+  removeProductFromCart,
+
 } = require("../db");
 
 //user routes will go here
@@ -234,12 +240,18 @@ usersRouter.patch(
 
     try {
       const cart = await getUserCartByCartOwnerId(userId);
-      const updatedCart = await updateProductAmountInCart(
-        cart.id,
-        productId,
-        quantity
-      );
-      res.send({ updatedCart: updatedCart, success: true });
+      if(quantity === 0){
+          const removedProduct = await removeProductFromCart(cart.id, productId);
+
+          res.send({removedProduct: removedProduct, success: true});
+      }else{
+        const updatedCart = await updateProductAmountInCart(
+          cart.id,
+          productId,
+          quantity
+        );
+        res.send({ updatedCart: updatedCart, success: true });
+      }
     } catch ({ name, message }) {
       next({
         name: "Error updating user's cart",
@@ -289,6 +301,30 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
     next({
       name: "ErrorGettingUser",
       message: "Error getting user info",
+    });
+  }
+});
+
+usersRouter.post("/me/create-address", requireUser, async (req, res, next) => {
+  const userId = req.user.id;
+  const { name, address, city, state } = req.body;
+
+  try {
+    const userAddress = await createUserAddress({
+      name: name,
+      address: address,
+      city: city,
+      state: state,
+      userId: userId,
+    });
+    res.send({
+      success: true,
+      userAddress: userAddress,
+    });
+  } catch ({ name, message }) {
+    next({
+      name: "ErrorCreatingAddress",
+      message: "Error creating user address",
     });
   }
 });
