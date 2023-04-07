@@ -14,6 +14,7 @@ const {
   createUser,
   getAllUsers,
   getUserById,
+  createUserAddress,
   editUserAddress,
   updateUser,
   deleteUser,
@@ -252,6 +253,30 @@ usersRouter.get("/me", requireUser, async (req, res, next) => {
     next({
       name: "ErrorGettingUser",
       message: "Error getting user info",
+    });
+  }
+});
+
+usersRouter.post("/me/create-address", requireUser, async (req, res, next) => {
+  const userId = req.user.id;
+  const { name, address, city, state } = req.body;
+
+  try {
+    const userAddress = await createUserAddress({
+      name: name,
+      address: address,
+      city: city,
+      state: state,
+      userId: userId,
+    });
+    res.send({
+      success: true,
+      userAddress: userAddress,
+    });
+  } catch ({ name, message }) {
+    next({
+      name: "ErrorCreatingAddress",
+      message: "Error creating user address",
     });
   }
 });
