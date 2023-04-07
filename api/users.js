@@ -18,7 +18,8 @@ const {
   editUserAddress,
   updateUser,
   deleteUser,
-  createGuestUser
+  createGuestUser, 
+  removeProductFromCart,
 } = require("../db");
 
 //user routes will go here
@@ -224,15 +225,21 @@ usersRouter.patch(
   async (req, res, next) => {
     const { userId, productId } = req.params;
     const { quantity } = req.body;
-    
+
     try {
       const cart = await getUserCartByCartOwnerId(userId);
-      const updatedCart = await updateProductAmountInCart(
-        cart.id,
-        productId,
-        quantity
-      );
-      res.send({ updatedCart: updatedCart, success: true });
+      if(quantity === 0){
+          const removedProduct = await removeProductFromCart(cart.id, productId);
+
+          res.send({removedProduct: removedProduct, success: true});
+      }else{
+        const updatedCart = await updateProductAmountInCart(
+          cart.id,
+          productId,
+          quantity
+        );
+        res.send({ updatedCart: updatedCart, success: true });
+      }
     } catch ({ name, message }) {
       next({
         name: "Error updating user's cart",
