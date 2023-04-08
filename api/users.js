@@ -369,8 +369,9 @@ usersRouter.patch("/me/edit-address", requireUser, async (req, res, next) => {
 
 usersRouter.patch("/me/edit-info", requireUser, async (req, res, next) => {
   const userId = req.user.id;
-  const { name, password, email } = req.body;
-
+  console.log(req.body);
+  const { name, password, email, isGuest } = req.body;
+  console.log( name, password, email, isGuest, "!!!!!!!!");
   const fields = {};
 
   if (name) {
@@ -382,13 +383,17 @@ usersRouter.patch("/me/edit-info", requireUser, async (req, res, next) => {
   if (password) {
     fields.password = password;
   }
+  if(isGuest !== undefined) {
+    fields.isGuest = isGuest;
+  }
 
   try {
     const user = await updateUser(userId, fields);
 
     const address = await getAddressByUser(userId);
-
-    user.address = address;
+    if(address){
+      user.address = address;
+    }
 
     res.send({
       success: true,
