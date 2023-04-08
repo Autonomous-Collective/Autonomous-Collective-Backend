@@ -75,6 +75,23 @@ const getTagByName = async (name) => {
   }
 }
 
+const editTag = async(id, name) => {
+  try {
+    console.log("starting to edit tag");
+    const { rows: [tag] } = await client.query(`
+    UPDATE tags
+    SET name = $1
+    WHERE id = $2
+    RETURNING *;
+    `, [name, id]);
+
+    console.log("finished editing tag!", tag);
+    return tag;
+  } catch (error) {
+    console.error("error editing tag");
+  }
+}
+
 const deleteTag = async (id) => {
   try {
     console.log("Starting to delete tag", id);
@@ -102,4 +119,5 @@ module.exports = {
   getTagById,
   getTagByName,
   deleteTag,
+  editTag,
 };
