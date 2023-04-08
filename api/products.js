@@ -23,6 +23,7 @@ const {
   deleteTag,
   removeTagFromProduct,
   getUserById,
+  editTag,
 } = require("../db");
 const { requireUser, requireAdmin } = require("./utils");
 
@@ -304,6 +305,38 @@ productsRouter.patch("/:productId", requireAdmin, async (req, res, next) => {
     next(error);
   }
 });
+
+productsRouter.patch("/edit-tag/:tagId", requireAdmin, async(req, res, next) => {
+
+  const { tagId } = req.params;
+  const name = req.body.name;
+ 
+  try {
+    const checkIfExists = await getTagById(tagId);
+    const checkIfTheSame = await getTagByName(name);
+
+    if(!checkIfExists){
+      res.status(400);
+      next({
+        name: "TagDoesNotExistError",
+        message: "The tag you're attempting to edit does not exist"
+      });
+    }else{
+      if(checkIfTheSame){
+        res.status(400);
+        next({
+          name: "TagAlreadyExists", 
+          message: "A tag by this name already exists",
+        })
+      }else{
+        const editedTag = await editTag(tagId, name);
+      res.send({editedTag: editedTag, success: true});
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+})
 
 //"DELETE"(ish) the product by product id
 productsRouter.patch(
