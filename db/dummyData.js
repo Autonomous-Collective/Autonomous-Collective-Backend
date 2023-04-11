@@ -203,6 +203,52 @@ const productsToAdd = [
     inventory: 20,
   },
   {
+
+    title: "The Naturals", 
+    author: "Jennifer Lynn Barnes",
+    isbn: "9781423168232", 
+    description: "Freegan tofu disrupt organic DSA. Flannel forage poutine solarpunk pug.",
+    price: 1599, 
+    imageUrl: "https://books.images.hpb.com/9781423168317/large.jpg",
+    inventory: 20
+  },
+  {
+    title: "The Phantom of the Opera", 
+    author: "Gaston Le Roux", 
+    isbn: "9781483706979", 
+    description: "Before they sold out celiac chia distillery master cleanse, affogato gochujang tbh DIY glossier green juice tumeric typewriter.", 
+    price: 1613, 
+    imageUrl: "https://books.images.hpb.com/9781483706979/large.jpg",
+    inventory: 15
+  },
+  {
+    title: "A Court of Thorns and Roses", 
+    author: "Sarah J. Maas", 
+    isbn: "9781635575569", 
+    description: "Disrupt portland raw denim heirloom, godard man braid etsy lomo kale chips hammock cardigan green juice williamsburg dreamcatcher marfa.", 
+    price: 899, 
+    imageUrl: "https://images.alibris.com/isbn/9781635575569.gif", 
+    inventory: 17
+  },
+  {
+    title: "One of Us Is Lying",
+    author: "Karen M. McManus", 
+    isbn: "9781524714680", 
+    description: "Disrupt portland raw denim heirloom, godard man braid etsy lomo kale chips hammock cardigan green juice williamsburg dreamcatcher marfa.", 
+    price: 849,
+    imageUrl: "https://books.images.hpb.com/9781524714680/large.jpg", 
+    inventory:  12
+  },
+  {
+    title: "Truly, Madly, Deadly", 
+    author: "Hannah Jayne", 
+    isbn: "9781402281211",
+    description: "Disrupt portland raw denim heirloom, godard man braid etsy lomo kale chips hammock cardigan green juice williamsburg dreamcatcher marfa.",
+    price: 499,
+    imageUrl: "https://books.images.hpb.com/9781402281211/large.jpg",
+    inventory: 15
+  }
+
     title: "The Wise Man's Fear",
     author: "Patrick Rothfuss",
     isbn: "0781234567906",
