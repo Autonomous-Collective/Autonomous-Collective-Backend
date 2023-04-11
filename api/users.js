@@ -23,9 +23,7 @@ const {
   checkoutUserCart,
   getUserCartById,
 
-
   removeProductFromCart,
-
 } = require("../db");
 
 //user routes will go here
@@ -240,11 +238,11 @@ usersRouter.patch(
 
     try {
       const cart = await getUserCartByCartOwnerId(userId);
-      if(quantity === 0){
-          const removedProduct = await removeProductFromCart(cart.id, productId);
+      if (quantity === 0) {
+        const removedProduct = await removeProductFromCart(cart.id, productId);
 
-          res.send({removedProduct: removedProduct, success: true});
-      }else{
+        res.send({ removedProduct: removedProduct, success: true });
+      } else {
         const updatedCart = await updateProductAmountInCart(
           cart.id,
           productId,
@@ -371,7 +369,9 @@ usersRouter.patch("/me/edit-info", requireUser, async (req, res, next) => {
   const userId = req.user.id;
   console.log(req.body);
   const { name, password, email, isGuest } = req.body;
-  console.log( name, password, email, isGuest, "!!!!!!!!");
+  console.log(name, password, email, isGuest, "!!!!!!!!");
+  const SALT_COUNT = 10;
+  const hashedPassword = await bcrypt.hash(password, SALT_COUNT);
   const fields = {};
 
   if (name) {
@@ -381,17 +381,19 @@ usersRouter.patch("/me/edit-info", requireUser, async (req, res, next) => {
     fields.email = email;
   }
   if (password) {
-    fields.password = password;
+    fields.password = hashedPassword;
   }
-  if(isGuest !== undefined) {
+  if (isGuest !== undefined) {
     fields.isGuest = isGuest;
   }
+
+  console.log(fields, "!!!");
 
   try {
     const user = await updateUser(userId, fields);
 
     const address = await getAddressByUser(userId);
-    if(address){
+    if (address) {
       user.address = address;
     }
 
