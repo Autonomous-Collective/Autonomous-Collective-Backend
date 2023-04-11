@@ -196,7 +196,7 @@ const productsToAdd = [
     author: "Patrick Rothfuss",
     isbn: "9781234567906",
     description:
-      "My name is Kvothe. I have stolen princesses back from sleeping barrow kings. I burned down the town of Trebon. I have spent the night with Felurian and left with both my sanity and my life. I was expelled from the University at a younger age than most people are allowed in. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep You may have heard of me. So begins a tale unequaled in fantasy literature—the story of a hero told in his own voice. It is a tale of sorrow, a tale of survival, a tale of one man’s search for meaning in his universe, and how that search, and the indomitable will that drove it, gave birth to a legend.",
+      "My name is Kvothe. I have stolen princesses back from sleeping barrow kings. I burned down the town of Trebon. I have spent the night with Felurian and left with both my sanity and my life. I was expelled from the University at a younger age than most people are allowed in. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep You may have heard of me.",
     price: 1099,
     imageUrl:
       "https://m.media-amazon.com/images/I/51JThzjy3gL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
