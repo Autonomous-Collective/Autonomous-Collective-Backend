@@ -202,6 +202,88 @@ const productsToAdd = [
       "https://m.media-amazon.com/images/I/51JThzjy3gL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
     inventory: 20,
   },
+  {
+    title: "The Wise Man's Fear",
+    author: "Patrick Rothfuss",
+    isbn: "0781234567906",
+    description: `“There are three things all wise men fear: the sea in storm, a night with no moon, and the anger of a gentle man.”
+ 
+    My name is Kvothe. You may have heard of me.
+     
+    So begins a tale told from his own point of view—a story unequaled in fantasy literature. Now in The Wise Man’s Fear, Day Two of The Kingkiller Chronicle, an escalating rivalry with a powerful member of the nobility forces Kvothe to leave the University and seek his fortune abroad. Adrift, penniless, and alone, he travels to Vintas, where he quickly becomes entangled in the politics of courtly society.  `,
+    price: 1599,
+    imageUrl:
+      "https://m.media-amazon.com/images/I/51-ckcKhlAL._SX308_BO1,204,203,200_.jpg",
+    inventory: 20,
+  },
+  {
+    title: "Dune",
+    author: "Frank Herbert",
+    isbn: "9781234567906",
+    description:
+      "Set on the desert planet Arrakis, Dune is the story of the boy Paul Atreides, heir to a noble family tasked with ruling an inhospitable world where the only thing of value is the “spice” melange, a drug capable of extending life and enhancing consciousness. Coveted across the known universe, melange is a prize worth killing for....",
+    price: 2099,
+    imageUrl:
+      "https://m.media-amazon.com/images/I/41+L9Q+rCLL._SY344_BO1,204,203,200_.jpg",
+    inventory: 20,
+  },
+  {
+    title: "Chainsaw Man, Vol. 1",
+    author: "Tatsuki Fujimoto",
+    isbn: "9781234567906",
+    description:
+      "Denji’s a poor young man who’ll do anything for money, even hunting down devils with his pet devil Pochita. He’s a simple man with simple dreams, drowning under a mountain of debt. But his sad life gets turned upside down one day when he’s betrayed by someone he trusts. Now with the power of a devil inside him, Denji’s become a whole new man—Chainsaw Man!",
+    price: 999,
+    imageUrl:
+      "https://m.media-amazon.com/images/P/B08JTYRXZB.01._SCLZZZZZZZ_SX500_.jpg",
+    inventory: 20,
+  },
+  {
+    title: "The Final Empire",
+    author: "Brandon Sanderson",
+    isbn: "9781234567906",
+    description: `For a thousand years the ash fell and no flowers bloomed. For a thousand years the Skaa slaved in misery and lived in fear. For a thousand years the Lord Ruler, the "Sliver of Infinity," reigned with absolute power and ultimate terror, divinely invincible. Then, when hope was so long lost that not even its memory remained, a terribly scarred, heart-broken half-Skaa rediscovered it in the depths of the Lord Ruler's most hellish prison. Kelsier "snapped" and found in himself the powers of a Mistborn. A brilliant thief and natural leader, he turned his talents to the ultimate caper, with the Lord Ruler himself as the mark.`,
+    price: 1099,
+    imageUrl:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1617768316i/68428.jpg",
+    inventory: 20,
+  },
+  {
+    title: "Elantris",
+    author: "Brandon Sanderson",
+    isbn: "9781234567906",
+    description: `Elantris was the capital of Arelon: gigantic, beautiful, literally radiant, filled with benevolent beings who used their powerful magical abilities for the benefit of all. Yet each of these demigods was once an ordinary person until touched by the mysterious transforming power of the Shaod. Ten years ago, without warning, the magic failed. Elantrians became wizened, leper-like, powerless creatures, and Elantris itself dark, filthy, and crumbling.`,
+    price: 1299,
+    imageUrl:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1475740953i/68427.jpg",
+    inventory: 20,
+  },
+  {
+    title: "Gideon the Ninth",
+    author: "Tamsyn Muir",
+    isbn: "9781234567906",
+    description: `The Emperor needs necromancers.
+
+    The Ninth Necromancer needs a swordswoman.
+    
+    Gideon has a sword, some dirty magazines, and no more time for undead bullshit.
+    
+    Brought up by unfriendly, ossifying nuns, ancient retainers, and countless skeletons, Gideon is ready to abandon a life of servitude and an afterlife as a reanimated corpse. She packs up her sword, her shoes, and her dirty magazines, and prepares to launch her daring escape. But her childhood nemesis won't set her free without a service.`,
+    price: 1299,
+    imageUrl:
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1546870952i/42036538.jpg",
+    inventory: 20,
+  },
+  {
+    title: "Cell",
+    author: "Stephen King",
+    isbn: "9781234567906",
+    description: `'Civilization slipped into its second dark age on an unsurprising track of blood but with a speed that could not have been foreseen by even the most pessimistic futurist. By Halloween, every major city from New York to Moscow stank to the empty heavens and the world as it had been was a memory.' The event became known as The Pulse. The virus was carried by every cell phone operating within the entire world. Within hours, those receiving calls would be infected. A young artist Clayton Riddell realises what is happening. He flees the devastation of explosive, burning Boston, desperate to reach his son before his son switches on his little red mobile phone ...`,
+    price: 1399,
+    imageUrl:
+      "https://m.media-amazon.com/images/P/1668025205.01._SCLZZZZZZZ_SX500_.jpg",
+    inventory: 20,
+  },
 ];
 
 //tags to add
