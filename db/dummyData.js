@@ -104,7 +104,7 @@ const productsToAdd = [
       "Chambray letterpress deep v pickled polaroid scenester bodega boys lumbersexual same 3 wolf moon vape copper mug PBR&B YOLO fam. ",
     price: 1599,
     imageUrl:
-      "https://content.production.cdn.art19.com/images/e0/4d/f9/10/e04df910-6447-4893-834d-fb8107d8c38f/6a49f34eb5f1b85895ae83c89f8fece7bc3435a9da9244baa7269d44c11e36f58a8ff1753049efeae09793d1f7c7ca01bef0723eaa9f0db57a807c7eb0ad9b0c.jpeg",
+      "https://m.media-amazon.com/images/I/51Ve9Eag4HL._SY291_BO1,204,203,200_QL40_FMwebp_.jpg",
     inventory: 21,
   },
   {
@@ -146,7 +146,8 @@ const productsToAdd = [
     description:
       " Knausgaard 8-bit subway tile banh mi 3 wolf moon microdosing disrupt occupy hammock portland art party.",
     price: 1600,
-    imageUrl: "https://m.media-amazon.com/images/I/51401mIcHSL._SL500_.jpg",
+    imageUrl:
+      "https://images.bwbcovers.com/140/The-Immortal-Life-of-Henrietta-Lacks-Skloot-Rebecca-9781400052189.jpg",
     inventory: 27,
   },
   {
