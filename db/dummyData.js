@@ -247,8 +247,8 @@ const productsToAdd = [
     price: 499,
     imageUrl: "https://books.images.hpb.com/9781402281211/large.jpg",
     inventory: 15
-  }
-
+  }, 
+{
     title: "The Wise Man's Fear",
     author: "Patrick Rothfuss",
     isbn: "0781234567906",
