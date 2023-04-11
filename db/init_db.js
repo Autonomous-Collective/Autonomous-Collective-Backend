@@ -115,7 +115,7 @@ const createTables = async () => {
       title varchar(255) UNIQUE NOT NULL,
       author varchar(255) NOT NULL,
       isbn varchar(255) NOT NULL,
-      description varchar(255) NOT NULL,
+      description varchar(500) NOT NULL,
       price INTEGER NOT NULL,
       img varchar(255),
       inventory INTEGER NOT NULL,
