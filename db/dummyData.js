@@ -93,7 +93,7 @@ const productsToAdd = [
       "Fashion axe messenger bag kickstarter normcore neutra hella authentic pitchfork typewriter butcher. Blackbird spyplane edison",
     price: 1499,
     imageUrl:
-      "https://fastly.picsum.photos/id/646/200/300.jpg?hmac=qCJ0bf6G6oSxx8YMMc1ZLVryK-w596XjRD3o8cXQLFc",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/To_Kill_a_Mockingbird_%28first_edition_cover%29.jpg/800px-To_Kill_a_Mockingbird_%28first_edition_cover%29.jpg",
     inventory: 30,
   },
   {
@@ -104,7 +104,7 @@ const productsToAdd = [
       "Chambray letterpress deep v pickled polaroid scenester bodega boys lumbersexual same 3 wolf moon vape copper mug PBR&B YOLO fam. ",
     price: 1599,
     imageUrl:
-      "https://fastly.picsum.photos/id/432/200/300.jpg?hmac=S0muAtaN6T0PXbBlf5O-UL0chTPM6i9FReOIs0IJlDU",
+      "https://content.production.cdn.art19.com/images/e0/4d/f9/10/e04df910-6447-4893-834d-fb8107d8c38f/6a49f34eb5f1b85895ae83c89f8fece7bc3435a9da9244baa7269d44c11e36f58a8ff1753049efeae09793d1f7c7ca01bef0723eaa9f0db57a807c7eb0ad9b0c.jpeg",
     inventory: 21,
   },
   {
@@ -115,7 +115,7 @@ const productsToAdd = [
       "Street art hella vegan listicle. Pour-over church-key palo santo put a bird on it, kitsch vaporware bruh big mood shaman. Selvage tacos four dollar toast, neutral milk hotel pop-up cornhole squid artisan.",
     price: 1800,
     imageUrl:
-      "https://fastly.picsum.photos/id/670/200/300.jpg?hmac=Ib58hZuwIQfcFZjEvKKi0p-j4GN1BGIkE7wLsa95Xk4",
+      "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1386749063i/25365.jpg",
     inventory: 30,
   },
   {
@@ -125,8 +125,7 @@ const productsToAdd = [
     description:
       "Vinyl tousled taiyaki hammock, lumbersexual quinoa freegan mukbang occupy pour-over 90's fam DIY slow-carb ramps.",
     price: 1899,
-    imageUrl:
-      "https://fastly.picsum.photos/id/212/200/300.jpg?hmac=2PUnX8vk476_x3NwjUExdYhPxVyP1Qd17BLvvBYTONQ",
+    imageUrl: "https://pictures.abebooks.com/inventory/md/md31238441586.jpg",
     inventory: 20,
   },
   {
@@ -137,7 +136,7 @@ const productsToAdd = [
       "Scenester tacos listicle occupy, lyft actually keytar Brooklyn skateboard migas. Bicycle rights man braid unicorn gorpcore. Affogato hammock banh mi mixtape.",
     price: 1399,
     imageUrl:
-      "https://fastly.picsum.photos/id/870/200/300.jpg?hmac=JX9iOiKD1A168ozbMTARKt6OKYtgsGx9GaBC8tX7oBg",
+      "https://img.thriftbooks.com/api/images/i/m/D342C0D0C8E75C6958E10BEFF19D961138A92C43.jpg",
     inventory: 30,
   },
   {
@@ -147,8 +146,7 @@ const productsToAdd = [
     description:
       " Knausgaard 8-bit subway tile banh mi 3 wolf moon microdosing disrupt occupy hammock portland art party.",
     price: 1600,
-    imageUrl:
-      "https://fastly.picsum.photos/id/194/200/300.jpg?hmac=jZgjsqqVvdWnXHdytjS2JPImgQFz9bGSyVQ31-b_eH4",
+    imageUrl: "https://m.media-amazon.com/images/I/51401mIcHSL._SL500_.jpg",
     inventory: 27,
   },
   {
@@ -159,7 +157,7 @@ const productsToAdd = [
       "Brunch chillwave vinyl meggings subway tile. Pop-up lyft migas, biodiesel cornhole listicle kinfolk roof party green juice Brooklyn shoreditch.",
     price: 1700,
     imageUrl:
-      "https://fastly.picsum.photos/id/439/200/300.jpg?hmac=-995cverChuR_nKZFItxOP38htc5deVMd6ZrKiME55g",
+      "https://img.thriftbooks.com/api/images/m/fcdfdad9747d57367091fd300a2a2c9b521ceca8.jpg",
     inventory: 20,
   },
   {
@@ -170,7 +168,7 @@ const productsToAdd = [
       "Chambray letterpress deep v pickled polaroid scenester bodega boys lumbersexual same 3 wolf moon vape copper mug PBR&B YOLO fam. ",
     price: 1299,
     imageUrl:
-      "https://fastly.picsum.photos/id/130/200/300.jpg?hmac=ax-dkx2e5CJww9f5IfH-mUHr_9eNBKUNGHcA46-0oB0",
+      "https://img.thriftbooks.com/api/images/i/m/5F92BF40A48403D452DED2AD1527744B22B9C49F.jpg",
     inventory: 15,
   },
   {
@@ -180,7 +178,7 @@ const productsToAdd = [
     description: "Elementary my dear Watson!!!!",
     price: 300,
     imageUrl:
-      "https://fastly.picsum.photos/id/1072/200/300.jpg?hmac=uzq3N0ox40X06q0Ql4mCdgMwHc13gIa0QAuu_6Zp6lQ",
+      "https://img.thriftbooks.com/api/images/m/088e6fcfbe18926f407c3808a30f7721b249be96.jpg",
     inventory: 25,
   },
   {
@@ -189,8 +187,7 @@ const productsToAdd = [
     isbn: "9781234567906",
     description: "Mr. DDDaaaarrrccyyyyy!!!!",
     price: 799,
-    imageUrl:
-      "https://fastly.picsum.photos/id/1080/200/300.jpg?hmac=3jCG4X8ni9cpiEppj6KVvqhpJ_owIFtDQOABJmhG1I0",
+    imageUrl: "https://m.media-amazon.com/images/I/41FEoMd5E9L._SL350_.jpg",
     inventory: 20,
   },
 ];
